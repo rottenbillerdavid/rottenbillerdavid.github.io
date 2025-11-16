@@ -47,7 +47,7 @@ title: Meet the Team
 </div>
 
 <div style="display: flex; align-items: center; margin-bottom: 2em; flex-direction: row-reverse;">
-  <img src="/assets/images/Barna.jpg" alt="Barna Kovacs" style="width: 150px; height: 150px; aspect-ratio: 1 / 1; border-radius: 50%; object-fit: cover; margin-left: 20px;">
+  <img src="/assets/images/Barna.jpg" alt="Member Name" style="width: 150px; height: 150px; aspect-ratio: 1 / 1; border-radius: 50%; object-fit: cover; margin-left: 20px;">
   <div>
     <h3>Barna Kovacs</h3>
     <p>"I mainly work on the development side, so my strengths are in programming areas like data analysis and computational modelling. I enjoy spending my free time in nature, especially when it snows a little, and by playing board games."</p>
@@ -55,7 +55,7 @@ title: Meet the Team
 </div>
 
 <div style="display: flex; align-items: center; margin-bottom: 2em;">
-  <img src="/assets/images/Fanni.jpg" alt="Fanni Soos" style="width: 150px; height: 150px; aspect-ratio: 1 / 1; border-radius: 50%; object-fit: cover; margin-right: 20px;">
+  <img src="/assets/images/Fanni.jpg" alt="Member Name" style="width: 150px; height: 150px; aspect-ratio: 1 / 1; border-radius: 50%; object-fit: cover; margin-right: 20px;">
   <div>
     <h3>Fanni Soos</h3>
     <p>"As a laboratory assistant in our group, I take part in processing and analyzing experimental samples in the anatomy lab."</p>
@@ -63,7 +63,7 @@ title: Meet the Team
 </div>
 
 <div style="display: flex; align-items: center; margin-bottom: 2em; flex-direction: row-reverse;">
-  <img src="/assets/images/Mariela.JPG" alt="Barna Kovacs" style="width: 150px; height: 150px; aspect-ratio: 1 / 1; border-radius: 50%; object-fit: cover; margin-left: 20px;">
+  <img src="/assets/images/Mariela.JPG" alt="Member Name" style="width: 150px; height: 150px; aspect-ratio: 1 / 1; border-radius: 50%; object-fit: cover; margin-left: 20px;">
   <div>
     <h3>Mariela Talavera Munoz</h3>
     <p>"I am Mariela Talavera, bacherlor student of biomedical engineering in Universidad Autónoma de Madrid. I am interested in medical imaging and prothesis design. I like playing piano and doing sports."</p>
@@ -79,7 +79,7 @@ title: Meet the Team
 </div>
 
 <div style="display: flex; align-items: center; margin-bottom: 2em; flex-direction: row-reverse;">
-  <img src="/assets/images/Doma.JPG" alt="Barna Kovacs" style="width: 150px; height: 150px; aspect-ratio: 1 / 1; border-radius: 50%; object-fit: cover; margin-left: 20px;">
+  <img src="/assets/images/Doma.JPG" alt="Member Name" style="width: 150px; height: 150px; aspect-ratio: 1 / 1; border-radius: 50%; object-fit: cover; margin-left: 20px;">
   <div>
     <h3>Domonkos Horvath</h3>
     <p>"I hold an MSc in Electronic and Computer Engineering from Pázmány Péter Catholic University and a PhD in Theoretical Medical Sciences from Semmelweis University. My research centers on chronic imaging experiments in large-brained animals, primarily under anesthesia. In our lab, I plan, organize, and conduct these experiments collaboratively with our team, advancing our understanding of brain function through precise and systematic application of chronic imaging approaches."</p>
@@ -95,7 +95,7 @@ title: Meet the Team
 </div>
 
 <div style="display: flex; align-items: center; margin-bottom: 2em; flex-direction: row-reverse;">
-  <img src="/assets/images/Virag.JPG" alt="Barna Kovacs" style="width: 150px; height: 150px; aspect-ratio: 1 / 1; border-radius: 50%; object-fit: cover; margin-left: 20px;">
+  <img src="/assets/images/Virag.JPG" alt="Member Name" style="width: 150px; height: 150px; aspect-ratio: 1 / 1; border-radius: 50%; object-fit: cover; margin-left: 20px;">
   <div>
     <h3>Virag Gyorgy</h3>
     <p>"I am a biotechnologist (MSc) working in the anatomy laboratory, where I focus on tissue sample processing, histological preparation, and experimental data analysis. My work also includes contributing to animal care and welfare."</p>
@@ -111,7 +111,7 @@ title: Meet the Team
 </div>
 
 <div style="display: flex; align-items: center; margin-bottom: 2em; flex-direction: row-reverse;">
-  <img src="/assets/images/Beni.JPG" alt="Barna Kovacs" style="width: 150px; height: 150px; aspect-ratio: 1 / 1; border-radius: 50%; object-fit: cover; margin-left: 20px;">
+  <img src="/assets/images/Beni.JPG" alt="Member Name" style="width: 150px; height: 150px; aspect-ratio: 1 / 1; border-radius: 50%; object-fit: cover; margin-left: 20px;">
   <div>
     <h3>Bendeguz Fekete</h3>
     <p>“I work on our human EEG project, investigating brain alterations associated with amblyopia using a range of statistical methods. My main research interest is how perception works, with a particular focus on predictive coding.”</p>
