@@ -109,3 +109,11 @@ title: Meet the Team
     <p>"I work as a research assistant on human EEG experiments and also support HR tasks within the group. I enjoy working with people and helping participants feel informed and comfortable throughout the studies. Our measurements focus on an eye condition I also have, which makes it especially exciting to see how the research gradually improves our understanding of it."</p>
   </div>
 </div>
+
+<div style="display: flex; align-items: center; margin-bottom: 2em; flex-direction: row-reverse;">
+  <img src="/assets/images/Beni.JPG" alt="Barna Kovacs" style="width: 150px; height: 150px; aspect-ratio: 1 / 1; border-radius: 50%; object-fit: cover; margin-left: 20px;">
+  <div>
+    <h3>Bendeguz Fekete</h3>
+    <p>“I work on our human EEG project, investigating brain alterations associated with amblyopia using a range of statistical methods. My main research interest is how perception works, with a particular focus on predictive coding.”</p>
+  </div>
+</div>
