@@ -5,7 +5,7 @@ title: Research
 
 Our research is driven by the pursuit of new methods to answer fundamental questions in neuroscience. We focus on developing and applying pioneering technologies—from high-resolution functional ultrasound imaging to next-generation gene therapies—to overcome long-standing barriers in the field. This approach allows us to investigate the brain at multiple scales, aiming to bridge the gap between understanding its basic design principles and creating effective clinical applications.
 
-## Biotechnology {#biotechnology}
+## Biotechnology
 
 Our work develops next-generation biotechnologies aimed at repairing, rather than compensating for, disrupted brain function. We focus on advancing molecular and gene delivery systems, neuromodulation technologies, and translational safety frameworks that enable durable and precise interventions in the adult brain.
 A central challenge for brain-targeted therapies lies in achieving long-term efficacy and safety across species with complex neural architectures. To address this, we are refining viral vector systems for stable gene delivery and minimal immune activation, and developing robust assays to assess treatment compatibility—such as improved neutralizing antibody detection for AAV-based therapies.
@@ -21,7 +21,7 @@ Enhancing the safety and effectiveness of gene therapy relies on accurately iden
 
 Genetically targeting specific brain cells is a powerful tool for understanding neural circuits and modeling diseases, but applying these techniques safely and effectively over the long term, especially in animals other than mice, remains a major hurdle. The use of gene therapy vectors, which are essential for this work, is often complicated by the body's immune response and inconsistent gene activity, limiting the reliability and duration of experiments. This research directly tackles this challenge by systematically searching for an optimal delivery method. Through extensive long-term studies involving optical imaging and immune monitoring, an optimized gene therapy approach was identified that ensures stable, long-lasting gene expression for brain imaging while significantly reducing the immune reaction. This breakthrough provides a much-needed method for safe and stable genetic access to the brain, paving the way for more advanced and reliable long-term studies of brain function.
 
-## Healing {#healing}
+## Healing
 
 Why is it so difficult to cure diseases of the human brain?  
 The child’s brain is remarkably flexible – during development it constantly fine-tunes its neural connections: useful links are strengthened while unnecessary ones are eliminated. In adulthood, however, this flexibility – known as brain plasticity – is largely lost. As a result, the brain can no longer repair or reorganize its circuits after developmental disorders or mental illnesses, which contributes to the persistence of conditions such as amblyopia, attention deficit disorder, or depression.
@@ -42,7 +42,7 @@ A fundamental challenge in neuroscience is understanding how the brain organizes
 
 A persistent challenge in neuroscience is that traditional imaging techniques force a difficult trade-off: they can capture either high-resolution detail over a very small area or a broad view with low resolution. This limitation has made it difficult to fully map the intricate, three-dimensional 'mesoscale' architecture of the visual cortex, where complex circuits for processing sight are organized. To overcome this hurdle, this research employs a novel 3D functional ultrasound imaging (fUSI) method, a cutting-edge approach designed to generate high-resolution maps of brain activity across large volumes with excellent temporal precision, effectively resolving the classic trade-off. Applying this technique to the cat's visual cortex, the study has successfully created detailed 3D reconstructions of functional maps for retinotopy and orientation preference, and has even identified specific features like orientation singularities, also known as pinwheels. This work provides an unprecedented window into the complex organization of neural circuits, significantly advancing our ability to understand how the brain processes visual information.
 
-## Animal models {#animal_models}
+## Animal models
 
 Animal models that facilitate ideas/theories translating to therapies.  
 Animal models are essential for translating ideas about brain function into effective therapies. While mice have been invaluable for identifying fundamental mechanisms, their sensory and cognitive systems differ markedly from those of humans. For example, a mouse’s limited visual acuity makes it an inadequate model for studying higher-order visual processing or for developing therapies to restore human vision.
