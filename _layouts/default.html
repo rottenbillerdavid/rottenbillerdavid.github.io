@@ -190,36 +190,35 @@ html.happy .corner-links a {
   <a href="/index.html" class="brand">HillierLab</a>
   <div class="nav-links">
     <a href="/vision.html"
-       class="{% if page.url == '/vision.html' or page.url == '/vision/' %}active{% endif %}">
+       class="{% if page.title == 'Vision' %}active{% endif %}">
       Vision
     </a>
     <a href="/research.html"
-       class="{% if page.url == '/research.html' or page.url == '/research/' %}active{% endif %}">
+       class="{% if page.title == 'Research' %}active{% endif %}">
       Research
     </a>
     <a href="/patients-teachers-students.html"
-       class="{% if page.url == '/patients-teachers-students.html' or page.url == '/patients-teachers-students/' %}active{% endif %}">
+       class="{% if page.title == 'Patients, Teachers, Students' %}active{% endif %}">
       Patients, Teachers, Students
     </a>
     <a href="/team.html"
-       class="{% if page.url == '/team.html' or page.url == '/team/' %}active{% endif %}">
+       class="{% if page.title == 'Meet the Team' or page.title == 'Team' %}active{% endif %}">
       Team
     </a>
     <a href="/collaborations.html"
-       class="{% if page.url == '/collaborations.html' or page.url == '/collaborations/' %}active{% endif %}">
+       class="{% if page.title == 'Collaborations' %}active{% endif %}">
       Collaborations
     </a>
     <a href="/news-publications.html"
-       class="{% if page.url == '/news-publications.html' or page.url == '/news-publications/' %}active{% endif %}">
+       class="{% if page.title == 'News & Publications' %}active{% endif %}">
       News & Publications
     </a>
     <a href="/contact.html"
-       class="{% if page.url == '/contact.html' or page.url == '/contact/' %}active{% endif %}">
+       class="{% if page.title == 'Contact' %}active{% endif %}">
       Contact
     </a>
   </div>
 </nav>
-
 
 <div class="scene">
   <div class="silhouette">
