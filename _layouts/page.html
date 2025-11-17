@@ -55,11 +55,44 @@ nav .brand { font-weight: bold; font-size: 1.25rem; transform: scale(1.25); tran
   text-decoration: none; color: inherit; padding: 8px 14px; border-radius: 4px; transition: all 0.3s ease; }
 nav .brand:hover { background: #fff; color: #000; }
 
-.nav-links { display: flex; justify-content: flex-end; align-items: center; gap: 1rem;
-  flex-grow: 1; margin-left: 2rem; padding-right: calc(1.5rem + 38px); box-sizing: border-box; }
-.nav-links a { color: inherit; text-decoration: none; font-weight: bold; font-size: 0.95rem;
-  padding: 8px 14px; border-radius: 4px; transition: all 0.3s ease; }
-.nav-links a:hover { background: #fff; color: #000; }
+.nav-links {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 1rem;
+  flex-grow: 1;
+  margin-left: 2rem;
+  padding-right: calc(1.5rem + 38px);
+  box-sizing: border-box;
+}
+
+.nav-links a {
+  color: inherit;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 0.95rem;
+  padding: 8px 14px;
+  border-radius: 4px;
+  transition: background-color 0.2s ease, color 0.2s ease;
+  border-bottom: 2px solid transparent; /* space reserved for underline */
+}
+
+/* Hover behavior like before */
+html:not(.happy) .nav-links a:hover {
+  background: #fff;
+  color: #000;
+}
+
+html.happy .nav-links a:hover {
+  background: #000;
+  color: #fff;
+}
+
+/* ✅ ACTIVE PAGE INDICATOR */
+.nav-links a.active {
+  border-bottom-color: currentColor;
+}
+
 
 /* -------- CONTENT -------- */
 main { max-width: 900px; margin: 0 auto; padding: 2rem; text-align: left; }
