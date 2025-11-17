@@ -55,6 +55,7 @@ nav .brand { font-weight: bold; font-size: 1.25rem; transform: scale(1.25); tran
   text-decoration: none; color: inherit; padding: 8px 14px; border-radius: 4px; transition: all 0.3s ease; }
 nav .brand:hover { background: #fff; color: #000; }
 
+/* NAV LINKS + ACTIVE BOOKMARK */
 .nav-links {
   display: flex;
   justify-content: flex-end;
@@ -67,6 +68,7 @@ nav .brand:hover { background: #fff; color: #000; }
 }
 
 .nav-links a {
+  position: relative;
   color: inherit;
   text-decoration: none;
   font-weight: bold;
@@ -74,31 +76,32 @@ nav .brand:hover { background: #fff; color: #000; }
   padding: 8px 14px;
   border-radius: 4px;
   transition: background-color 0.2s ease, color 0.2s ease;
-  border-bottom: 2px solid transparent; /* space reserved for underline */
 }
 
-/* Hover behavior like before */
-html:not(.happy) .nav-links a:hover {
-  background: #fff;
-  color: #000;
+/* Hover BG */
+html:not(.happy) .nav-links a:hover { background: #fff; color: #000; }
+html.happy .nav-links a:hover { background: #000; color: #fff; }
+
+/* ACTIVE PAGE BOOKMARK TAB */
+.nav-links a.active::before {
+  content: "";
+  position: absolute;
+  top: -10px;
+  left: 6px;
+  right: 6px;
+  height: 8px;
+  background: currentColor;
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
 }
 
-html.happy .nav-links a:hover {
-  background: #000;
-  color: #fff;
-}
-
-/* ✅ ACTIVE PAGE INDICATOR */
-.nav-links a.active {
-  border-bottom-color: currentColor;
-}
-
+nav a:focus { outline: none !important; }
 
 /* -------- CONTENT -------- */
 main { max-width: 900px; margin: 0 auto; padding: 2rem; text-align: left; }
 main img { display: block; max-width: 700px; width: 90%; margin: 2rem auto; border-radius: 10px; }
 
-/* ----------- HAPPY (LIGHT) THEME ----------- */
+/* ----------- HAPPY MODE ----------- */
 html.happy, html.happy body { background: #fff; color: #000; }
 html.happy nav { background: #fff; color: #000; border-bottom: 2px solid #000; }
 html.happy nav .brand:hover,
@@ -110,37 +113,19 @@ html.happy .nav-links a:hover { background: #000; color: #fff; }
 <nav>
   <a href="/index.html" class="brand">HillierLab</a>
   <div class="nav-links">
-    <a href="/vision.html"
-       class="{% if page.title == 'Vision' %}active{% endif %}">
-      Vision
-    </a>
-    <a href="/research.html"
-       class="{% if page.title == 'Research' %}active{% endif %}">
-      Research
-    </a>
-    <a href="/patients-teachers-students.html"
-       class="{% if page.title == 'Patients, Teachers, Students' %}active{% endif %}">
+    <a href="/vision.html" class="{% if page.title == 'Vision' %}active{% endif %}">Vision</a>
+    <a href="/research.html" class="{% if page.title == 'Research' %}active{% endif %}">Research</a>
+    <a href="/patients-teachers-students.html" class="{% if page.title == 'Patients, Teachers, Students' %}active{% endif %}">
       Patients, Teachers, Students
     </a>
-    <a href="/team.html"
-       class="{% if page.title == 'Meet the Team' or page.title == 'Team' %}active{% endif %}">
+    <a href="/team.html" class="{% if page.title == 'Meet the Team' or page.title == 'Team' %}active{% endif %}">
       Team
     </a>
-    <a href="/collaborations.html"
-       class="{% if page.title == 'Collaborations' %}active{% endif %}">
-      Collaborations
-    </a>
-    <a href="/news-publications.html"
-       class="{% if page.title == 'News & Publications' %}active{% endif %}">
-      News & Publications
-    </a>
-    <a href="/contact.html"
-       class="{% if page.title == 'Contact' %}active{% endif %}">
-      Contact
-    </a>
+    <a href="/collaborations.html" class="{% if page.title == 'Collaborations' %}active{% endif %}">Collaborations</a>
+    <a href="/news-publications.html" class="{% if page.title == 'News & Publications' %}active{% endif %}">News & Publications</a>
+    <a href="/contact.html" class="{% if page.title == 'Contact' %}active{% endif %}">Contact</a>
   </div>
 </nav>
-
 
 <main>
   <h1>{{ page.title }}</h1>
@@ -148,12 +133,12 @@ html.happy .nav-links a:hover { background: #000; color: #fff; }
 </main>
 
 <script>
-// If unlocked, ensure body picks up any body-specific styles (not strictly needed anymore)
+// If unlocked, ensure body picks up any body-specific styles
 if (sessionStorage.getItem('hl_unlocked') === '1') {
   document.documentElement.classList.add('happy');
 }
 
-// Reveal after first frame (removes paint block + no-anim)
+// Reveal after first frame
 requestAnimationFrame(() => {
   document.documentElement.classList.remove('prep', 'no-anim');
   document.documentElement.style.background = '';
