@@ -77,15 +77,37 @@ html.happy .nav-links a:hover { background: #000; color: #fff; }
 <nav>
   <a href="/index.html" class="brand">HillierLab</a>
   <div class="nav-links">
-    <a href="/vision.html">Vision</a>
-    <a href="/research.html">Research</a>
-    <a href="/patients-teachers-students.html">Patients, Teachers, Students</a>
-    <a href="/team.html">Team</a>
-    <a href="/collaborations.html">Collaborations</a>
-    <a href="/news-publications.html">News & Publications</a>
-    <a href="/contact.html">Contact</a>
+    <a href="/vision.html"
+       class="{% if page.url == '/vision.html' or page.url == '/vision/' %}active{% endif %}">
+      Vision
+    </a>
+    <a href="/research.html"
+       class="{% if page.url == '/research.html' or page.url == '/research/' %}active{% endif %}">
+      Research
+    </a>
+    <a href="/patients-teachers-students.html"
+       class="{% if page.url == '/patients-teachers-students.html' or page.url == '/patients-teachers-students/' %}active{% endif %}">
+      Patients, Teachers, Students
+    </a>
+    <a href="/team.html"
+       class="{% if page.url == '/team.html' or page.url == '/team/' %}active{% endif %}">
+      Team
+    </a>
+    <a href="/collaborations.html"
+       class="{% if page.url == '/collaborations.html' or page.url == '/collaborations/' %}active{% endif %}">
+      Collaborations
+    </a>
+    <a href="/news-publications.html"
+       class="{% if page.url == '/news-publications.html' or page.url == '/news-publications/' %}active{% endif %}">
+      News & Publications
+    </a>
+    <a href="/contact.html"
+       class="{% if page.url == '/contact.html' or page.url == '/contact/' %}active{% endif %}">
+      Contact
+    </a>
   </div>
 </nav>
+
 
 <main>
   <h1>{{ page.title }}</h1>
