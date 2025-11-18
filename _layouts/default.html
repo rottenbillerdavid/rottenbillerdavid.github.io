@@ -210,21 +210,43 @@ html.happy .corner-links a {
 <nav>
   <a href="/index.html" class="brand">HillierLab</a>
   <div class="nav-links">
-    <a href="/vision.html" class="{% if page.title == 'Vision' %}active{% endif %}">Vision</a>
-    <a href="/research.html" class="{% if page.title == 'Research' %}active{% endif %}">Research</a>
-    <a href="/patients-teachers-students.html" class="{% if page.title == 'Patients, Teachers, Students' %}active{% endif %}">
+    <a href="/vision.html"
+       class="{% if page.url contains '/vision' %}active{% endif %}">
+      Vision
+    </a>
+
+    <a href="/research.html"
+       class="{% if page.url contains '/research' %}active{% endif %}">
+      Research
+    </a>
+
+    <a href="/patients-teachers-students.html"
+       class="{% if page.url contains '/patients-teachers-students' %}active{% endif %}">
       Patients, Teachers, Students
     </a>
-    <a href="/team.html" class="{% if page.title == 'Meet the Team' or page.title == 'Team' %}active{% endif %}">
+
+    <a href="/team.html"
+       class="{% if page.url contains '/team' %}active{% endif %}">
       Team
     </a>
-    <a href="/collaborations.html" class="{% if page.title == 'Collaborations' %}active{% endif %}">Collaborations</a>
-    <a href="/news-publications.html" class="{% if page.title == 'News & Publications' %}active{% endif %}">
+
+    <a href="/collaborations.html"
+       class="{% if page.url contains '/collaborations' %}active{% endif %}">
+      Collaborations
+    </a>
+
+    <a href="/news-publications.html"
+       class="{% if page.url contains '/news-publications' %}active{% endif %}">
       News & Publications
     </a>
-    <a href="/contact.html" class="{% if page.title == 'Contact' %}active{% endif %}">Contact</a>
+
+    <a href="/contact.html"
+       class="{% if page.url contains '/contact' %}active{% endif %}">
+      Contact
+    </a>
   </div>
 </nav>
+
 
 <div class="scene">
   <div class="silhouette">
