@@ -7,7 +7,7 @@
 
 <!-- Preload happy-state images -->
 <link rel="preload" as="image" href="/assets/images/h_brain_lashes.png" />
-link rel="preload" as="image" href="/assets/images/happy_window2.png" />
+<link rel="preload" as="image" href="/assets/images/happy_window2.png" />
 <link rel="preload" as="image" href="/assets/images/happy_scenery.png" />
 
 <!-- 🪄 Prepaint: set theme and block paint for one frame -->
@@ -76,11 +76,11 @@ nav .brand:hover { background: #fff; color: #000; }
   font-size: 0.95rem;
   padding: 8px 14px;
   border-radius: 6px;
-  border: 2px solid transparent; /* frame reserved */
+  border: 2px solid transparent;
   transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
 }
 
-/* Hover background (same behavior as before) */
+/* Hover background */
 html:not(.happy) .nav-links a:hover {
   background: #fff;
   color: #000;
@@ -90,7 +90,7 @@ html.happy .nav-links a:hover {
   color: #fff;
 }
 
-/* ✅ ACTIVE PAGE: show frame */
+/* ACTIVE PAGE: show frame */
 .nav-links a.active {
   border-color: currentColor;
 }
@@ -157,6 +157,50 @@ html.happy .silhouette img.happy  { opacity: 1; }
   transition: color 1s ease;
 }
 
+/* ----------- RELOCK CONTROL ----------- */
+#relock-container {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.5s ease;
+  z-index: 5;
+}
+
+#relock-container img {
+  width: 70px;
+  max-width: 80px;
+  height: auto;
+}
+
+#relock-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  font: inherit;
+  color: rgb(180, 180, 180);
+  cursor: pointer;
+}
+
+#relock-button img {
+  width: 20px;
+  height: 20px;
+}
+
+#relock-button span {
+  font-size: 0.9rem;
+}
+
 /* ----------- CORNER LINKS ----------- */
 .corner-links {
   position: fixed;
@@ -214,39 +258,32 @@ html.happy .corner-links a {
        class="{% if page.url contains '/vision' %}active{% endif %}">
       Vision
     </a>
-
     <a href="/research.html"
        class="{% if page.url contains '/research' %}active{% endif %}">
       Research
     </a>
-
     <a href="/patients-teachers-students.html"
        class="{% if page.url contains '/patients-teachers-students' %}active{% endif %}">
       Patients, Teachers, Students
     </a>
-
     <a href="/team.html"
        class="{% if page.url contains '/team' %}active{% endif %}">
       Team
     </a>
-
     <a href="/collaborations.html"
        class="{% if page.url contains '/collaborations' %}active{% endif %}">
       Collaborations
     </a>
-
     <a href="/news-publications.html"
        class="{% if page.url contains '/news-publications' %}active{% endif %}">
       News & Publications
     </a>
-
     <a href="/contact.html"
        class="{% if page.url contains '/contact' %}active{% endif %}">
       Contact
     </a>
   </div>
 </nav>
-
 
 <div class="scene">
   <div class="silhouette">
@@ -265,6 +302,15 @@ html.happy .corner-links a {
   <img src="/assets/images/happy_scenery.png"  class="projection happy"  alt="Happy projection" />
 
   <div class="subtitle" id="subtitle">Unlocking the Mesoscale Level of the Brain</div>
+
+  <!-- RELOCK CONTROL -->
+  <div id="relock-container">
+    <img src="/assets/images/lock_grey.png" alt="Relock to dark mode" />
+    <button id="relock-button">
+      <img src="/assets/images/grey_key.png" alt="" />
+      <span>Relock</span>
+    </button>
+  </div>
 </div>
 
 <div class="corner-links" id="corner-links">
@@ -295,7 +341,20 @@ const projHappy   = document.querySelector('.projection.happy');
 const subtitle    = document.getElementById('subtitle');
 const cornerLinks = document.getElementById('corner-links');
 const cornerAnchors = cornerLinks.querySelectorAll('a');
+const relockContainer = document.getElementById('relock-container');
+const relockButton = document.getElementById('relock-button');
+
 let unlocked = sessionStorage.getItem('hl_unlocked') === '1';
+
+function showRelock() {
+  relockContainer.style.opacity = '1';
+  relockContainer.style.pointerEvents = 'auto';
+}
+
+function hideRelock() {
+  relockContainer.style.opacity = '0';
+  relockContainer.style.pointerEvents = 'none';
+}
 
 function applyUnlockedImmediate() {
   document.documentElement.classList.add('happy');
@@ -307,6 +366,7 @@ function applyUnlockedImmediate() {
   cornerLinks.style.opacity = '1';
   cornerAnchors.forEach(a => a.style.opacity = '1');
   subtitle.textContent = 'Bridging the Gap Between Molecules and Behavior';
+  showRelock();
 }
 
 if (unlocked) applyUnlockedImmediate();
@@ -337,6 +397,42 @@ lock.addEventListener('click', e => {
   }, 800);
 
   subtitle.textContent = 'Bridging the Gap Between Molecules and Behavior';
+  showRelock();
+});
+
+// RELOCK FEATURE
+relockButton.addEventListener('click', function (e) {
+  e.preventDefault();
+
+  // Remove unlocked state
+  unlocked = false;
+  sessionStorage.removeItem('hl_unlocked');
+
+  // Switch visuals back to gloomy
+  document.documentElement.classList.remove('happy');
+
+  brainHappy.style.opacity  = '0';
+  projHappy.style.opacity   = '0';
+  brainGloomy.style.opacity = '1';
+  projGloomy.style.opacity  = '1';
+
+  subtitle.textContent = 'Unlocking the Mesoscale Level of the Brain';
+
+  // Hide corner links again
+  cornerLinks.style.opacity = '0';
+  cornerAnchors.forEach(a => a.style.opacity = '0');
+
+  // Show blue lock again
+  lock.style.display = 'block';
+  // small timeout so transition can apply
+  requestAnimationFrame(() => {
+    lock.style.opacity = '0';
+    requestAnimationFrame(() => {
+      lock.style.opacity = '1';
+    });
+  });
+
+  hideRelock();
 });
 
 // Reveal after first frame
