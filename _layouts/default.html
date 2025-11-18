@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
@@ -166,44 +166,31 @@ html.happy .silhouette img.happy  { opacity: 1; }
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* gap: 6px; */
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.5s ease;
   z-index: 5;
 }
 
-  .lock-wrapper {
-  /* This pulls the lock down, reducing the gap to the button */
-  margin-bottom: -10px; /* Adjust this negative value to set the desired closeness */
-}
-
-#relock-container img {
-  width: 200px;
-  max-width: 220px;
-  height: auto;
-}
-
-  .lock-wrapper img {
-  cursor: url('/assets/images/grey_key.png') 10 10, pointer; /* Change the cursor to the grey key */
-}
-
 #relock-button {
-  display: inline-flex;
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 6px;
+  gap: 4px; /* space between lock and text */
   background: none;
   border: none;
   padding: 8px 12px;
   margin: 0;
   font: inherit;
   color: rgb(180, 180, 180);
-  cursor: url('/assets/images/grey_key.png'), pointer;
+  cursor: url('/assets/images/grey_key.png') 10 10, pointer;
 }
 
 #relock-button img {
-  width: 20px;
-  height: 20px;
+  width: 200px;
+  max-width: 220px;
+  height: auto;
+  transform: translateY(10px); /* lower the lock visually */
 }
 
 #relock-button span {
@@ -313,32 +300,31 @@ html.happy .corner-links a {
   <div class="subtitle" id="subtitle">Unlocking the Mesoscale Level of the Brain</div>
 
   <!-- RELOCK CONTROL -->
- <div id="relock-container">
-  <div class="lock-wrapper">
-    <img src="/assets/images/lock_grey.png" alt="Relock to dark mode" />
+  <div id="relock-container">
+    <button id="relock-button">
+      <img src="/assets/images/lock_grey.png" alt="Relock to dark mode" />
+      <span>Relock</span>
+    </button>
   </div>
-  <button id="relock-button">
-    <span>Relock</span>
-  </button>
-</div>
 
-<div class="corner-links" id="corner-links">
-  <a href="/research.html#biotechnology" class="corner-top-left">
-    <span class="corner-title">BIOTECHNOLOGY</span><br />
-    providing cure not symptom treatment
-  </a>
-  <a href="/research.html#animal-models" class="corner-top-right">
-    <span class="corner-title">ANIMAL MODELS</span><br />
-    from idea to therapy
-  </a>
-  <a href="/research.html#healing" class="corner-bottom-left">
-    <span class="corner-title">HEALING</span><br />
-    brain circuits in adults
-  </a>
-  <a href="/streamlined" class="corner-bottom-right">
-    <span class="corner-title">STREAMLINED</span><br />
-    biologist-data scientist team
-  </a>
+  <div class="corner-links" id="corner-links">
+    <a href="/research.html#biotechnology" class="corner-top-left">
+      <span class="corner-title">BIOTECHNOLOGY</span><br />
+      providing cure not symptom treatment
+    </a>
+    <a href="/research.html#animal-models" class="corner-top-right">
+      <span class="corner-title">ANIMAL MODELS</span><br />
+      from idea to therapy
+    </a>
+    <a href="/research.html#healing" class="corner-bottom-left">
+      <span class="corner-title">HEALING</span><br />
+      brain circuits in adults
+    </a>
+    <a href="/streamlined" class="corner-bottom-right">
+      <span class="corner-title">STREAMLINED</span><br />
+      biologist-data scientist team
+    </a>
+  </div>
 </div>
 
 <script>
