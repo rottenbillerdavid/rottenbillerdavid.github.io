@@ -151,6 +151,7 @@ html.happy .silhouette img.happy  { opacity: 1; }
   pointer-events: none;
   transition: opacity 0.3s ease;
   z-index: 3;
+  background: transparent;
 }
 
 .lock {
@@ -386,8 +387,8 @@ function applyUnlockedImmediate() {
   cornerAnchors.forEach(a => a.style.opacity = '1');
   subtitle.textContent = 'Bridging the Gap Between Molecules and Behavior';
 
-  // make sure animation is hidden on reload
   if (brainAnim) {
+    brainAnim.pause();
     brainAnim.style.opacity = '0';
   }
 
@@ -396,44 +397,73 @@ function applyUnlockedImmediate() {
 
 if (unlocked) applyUnlockedImmediate();
 
+// LOCK CLICK: play animation FIRST, then transition the rest
 lock.addEventListener('click', e => {
   e.stopPropagation();
   if (unlocked) return;
   unlocked = true;
   sessionStorage.setItem('hl_unlocked', '1');
-  document.documentElement.classList.add('happy');
 
+  // Fade out lock
   lock.style.transition = 'opacity 0.8s ease';
   lock.style.opacity = '0';
   setTimeout(() => { lock.style.display = 'none'; }, 800);
 
-  brainGloomy.style.opacity = '0';
-  projGloomy.style.opacity  = '0';
+  if (brainAnim) {
+    // Prepare animation overlay
+    brainAnim.currentTime = 0;
+    brainAnim.style.opacity = '1';
+    brainAnim.playbackRate = 0.77; // ~30% slower
 
-  setTimeout(() => {
-    brainHappy.style.opacity = '1';
-    projHappy.style.opacity  = '1';
-
-    // Play brain animation overlay on unlock
-    if (brainAnim) {
-      brainAnim.currentTime = 0;
-      brainAnim.style.opacity = '1';
-      brainAnim.play();
-      brainAnim.addEventListener('ended', () => {
-        brainAnim.style.opacity = '0';
-      }, { once: true });
+    const playPromise = brainAnim.play();
+    if (playPromise && typeof playPromise.catch === 'function') {
+      playPromise.catch(err => console.error('Brain animation play() failed:', err));
     }
-  }, 300);
 
-  setTimeout(() => {
-    cornerLinks.style.opacity = '1';
-    cornerAnchors.forEach((a, i) =>
-      setTimeout(() => (a.style.opacity = '1'), i * 500)
-    );
-  }, 800);
+    brainAnim.addEventListener('ended', () => {
+      // Hide animation overlay
+      brainAnim.style.opacity = '0';
 
-  subtitle.textContent = 'Bridging the Gap Between Molecules and Behavior';
-  showRelock();
+      // Now flip to happy theme
+      document.documentElement.classList.add('happy');
+
+      brainGloomy.style.opacity = '0';
+      projGloomy.style.opacity  = '0';
+
+      setTimeout(() => {
+        brainHappy.style.opacity = '1';
+        projHappy.style.opacity  = '1';
+      }, 150);
+
+      // Reveal corner links
+      cornerLinks.style.opacity = '1';
+      cornerAnchors.forEach((a, i) =>
+        setTimeout(() => (a.style.opacity = '1'), i * 500)
+      );
+
+      subtitle.textContent = 'Bridging the Gap Between Molecules and Behavior';
+      showRelock();
+    }, { once: true });
+  } else {
+    // Fallback: if no animation element, do original behavior
+    document.documentElement.classList.add('happy');
+    brainGloomy.style.opacity = '0';
+    projGloomy.style.opacity  = '0';
+    setTimeout(() => {
+      brainHappy.style.opacity = '1';
+      projHappy.style.opacity  = '1';
+    }, 300);
+
+    setTimeout(() => {
+      cornerLinks.style.opacity = '1';
+      cornerAnchors.forEach((a, i) =>
+        setTimeout(() => (a.style.opacity = '1'), i * 500)
+      );
+    }, 800);
+
+    subtitle.textContent = 'Bridging the Gap Between Molecules and Behavior';
+    showRelock();
+  }
 });
 
 // RELOCK FEATURE
@@ -447,7 +477,6 @@ relockButton.addEventListener('click', function (e) {
   // Switch visuals back to gloomy
   document.documentElement.classList.remove('happy');
 
-  // Stop and hide animation if playing
   if (brainAnim) {
     brainAnim.pause();
     brainAnim.style.opacity = '0';
@@ -466,7 +495,6 @@ relockButton.addEventListener('click', function (e) {
 
   // Show blue lock again
   lock.style.display = 'block';
-  // small timeout so transition can apply
   requestAnimationFrame(() => {
     lock.style.opacity = '0';
     requestAnimationFrame(() => {
