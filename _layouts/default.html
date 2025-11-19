@@ -9,6 +9,8 @@
 <link rel="preload" as="image" href="/assets/images/h_brain_lashes3.png" />
 <link rel="preload" as="image" href="/assets/images/happy_window2.png" />
 <link rel="preload" as="image" href="/assets/images/happy_scenery.png" />
+<!-- Preload brain animation -->
+<link rel="preload" as="video" href="/assets/video/anim1.webmm" type="video/webm" />
 
 <!-- 🪄 Prepaint: set theme and block paint for one frame -->
 <script>
@@ -138,6 +140,18 @@ html.happy .silhouette img.happy  { opacity: 1; }
 }
 .brain img.happy { opacity: 0; z-index: 2; }
 .brain img.gloomy { z-index: 1; }
+
+/* Brain animation overlay */
+.brain-animation {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: auto;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  z-index: 3;
+}
 
 .lock {
   position: absolute; top: 40%; left: 50%;
@@ -290,6 +304,15 @@ html.happy .corner-links a {
   <div class="brain" id="brain">
     <img src="/assets/images/g_brain_lashes2.png" class="gloomy" alt="Gloomy brain" />
     <img src="/assets/images/h_brain_lashes3.png" class="happy"  alt="Happy brain" />
+
+    <!-- Brain pipes animation overlay -->
+    <video id="brain-animation"
+           class="brain-animation"
+           preload="auto"
+           muted
+           playsinline>
+      <source src="/assets/video/anim1.webmm" type="video/webm" />
+    </video>
   </div>
 
   <img src="/assets/images/lock_blue.png" class="lock" id="lock" alt="Lock" />
@@ -338,6 +361,7 @@ const cornerLinks = document.getElementById('corner-links');
 const cornerAnchors = cornerLinks.querySelectorAll('a');
 const relockContainer = document.getElementById('relock-container');
 const relockButton = document.getElementById('relock-button');
+const brainAnim   = document.getElementById('brain-animation');
 
 let unlocked = sessionStorage.getItem('hl_unlocked') === '1';
 
@@ -361,6 +385,12 @@ function applyUnlockedImmediate() {
   cornerLinks.style.opacity = '1';
   cornerAnchors.forEach(a => a.style.opacity = '1');
   subtitle.textContent = 'Bridging the Gap Between Molecules and Behavior';
+
+  // make sure animation is hidden on reload
+  if (brainAnim) {
+    brainAnim.style.opacity = '0';
+  }
+
   showRelock();
 }
 
@@ -379,9 +409,20 @@ lock.addEventListener('click', e => {
 
   brainGloomy.style.opacity = '0';
   projGloomy.style.opacity  = '0';
+
   setTimeout(() => {
     brainHappy.style.opacity = '1';
     projHappy.style.opacity  = '1';
+
+    // Play brain animation overlay on unlock
+    if (brainAnim) {
+      brainAnim.currentTime = 0;
+      brainAnim.style.opacity = '1';
+      brainAnim.play();
+      brainAnim.addEventListener('ended', () => {
+        brainAnim.style.opacity = '0';
+      }, { once: true });
+    }
   }, 300);
 
   setTimeout(() => {
@@ -405,6 +446,12 @@ relockButton.addEventListener('click', function (e) {
 
   // Switch visuals back to gloomy
   document.documentElement.classList.remove('happy');
+
+  // Stop and hide animation if playing
+  if (brainAnim) {
+    brainAnim.pause();
+    brainAnim.style.opacity = '0';
+  }
 
   brainHappy.style.opacity  = '0';
   projHappy.style.opacity   = '0';
