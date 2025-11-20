@@ -432,54 +432,69 @@ lock.addEventListener('click', e => {
   lock.style.opacity = '0';
   setTimeout(() => { lock.style.display = 'none'; }, 800);
 
-  if (brainAnim) {
-    // Hide static images while animation plays
-    brainGloomy.style.opacity = '0';
-    brainHappy.style.opacity  = '0';
-    projGloomy.style.opacity  = '0';
-    projHappy.style.opacity   = '0';
-
-    // Prepare animation overlay
-    brainAnim.currentTime = 0;
-    brainAnim.style.opacity = '1';
-    brainAnim.playbackRate = 0.77; // ~30% slower
-
-    const leadTime = 2; // seconds before end to start page transition
-    let transitionStarted = false;
-
-    function maybeStartTransition() {
-      const duration = brainAnim.duration;
-      if (transitionStarted) return;
-      if (!duration || isNaN(duration)) return;
-
-      const threshold = Math.max(0, duration - leadTime);
-      if (brainAnim.currentTime >= threshold) {
-        transitionStarted = true;
-        startHappyTransition();
-      }
-    }
-
-    brainAnim.addEventListener('timeupdate', maybeStartTransition);
-
-    const playPromise = brainAnim.play();
-    if (playPromise && typeof playPromise.catch === 'function') {
-      playPromise.catch(err => console.error('Brain animation play() failed:', err));
-    }
-
-    brainAnim.addEventListener('ended', () => {
-      // Hide animation overlay at the end
-      brainAnim.style.opacity = '0';
-      brainAnim.removeEventListener('timeupdate', maybeStartTransition);
-
-      // If for some reason we never hit the threshold, trigger transition now
-      if (!transitionStarted) {
-        startHappyTransition();
-      }
-    }, { once: true });
-  } else {
-    // Fallback: if no animation element, do direct transition
+  if (!brainAnim) {
     startHappyTransition();
+    return;
   }
+
+  // Reset and show animation
+  brainAnim.currentTime = 0;
+  brainAnim.style.opacity = '1';
+  brainAnim.playbackRate = 0.77;
+
+  // DO NOT hide gloomy scenery anymore!
+  // Only hide gloomy brain.
+  brainGloomy.style.opacity = '0';
+  brainHappy.style.opacity  = '0';
+  // Leave projGloomy visible until transition
+
+  const fadeOutLead = 2;  // seconds before end to fade out animation + fade in happy brain
+  const transitionLead = 1; // seconds before end to transition page
+
+  let faded = false;
+  let transitioned = false;
+
+  function monitor() {
+    const dur = brainAnim.duration;
+    if (!dur || isNaN(dur)) return;
+
+    const t = brainAnim.currentTime;
+
+    // 1. Fade animation + reveal happy brain 2s before end
+    if (!faded && t >= dur - fadeOutLead) {
+      faded = true;
+      brainAnim.style.transition = 'opacity 1s ease';
+      brainAnim.style.opacity = '0';
+
+      // Fade in happy brain early
+      brainHappy.style.opacity = '1';
+    }
+
+    // 2. Start the rest of the transition 1s before end
+    if (!transitioned && t >= dur - transitionLead) {
+      transitioned = true;
+      startHappyTransition();  // background, scenery, corner links
+    }
+  }
+
+  brainAnim.addEventListener('timeupdate', monitor);
+
+  const playPromise = brainAnim.play();
+  if (playPromise && playPromise.catch) {
+    playPromise.catch(err => console.error(err));
+  }
+
+  brainAnim.addEventListener('ended', () => {
+    brainAnim.style.opacity = '0';
+    brainAnim.removeEventListener('timeupdate', monitor);
+
+    // Safety in case both triggers were missed
+    if (!faded) {
+      brainHappy.style.opacity = '1';
+      brainAnim.style.opacity = '0';
+    }
+    if (!transitioned) startHappyTransition();
+  }, { once: true });
 });
 
 // RELOCK FEATURE
