@@ -117,3 +117,11 @@ title: Meet the Team
     <p>“I work on our human EEG project, investigating brain alterations associated with amblyopia using a range of statistical methods. My main research interest is how perception works, with a particular focus on predictive coding.”</p>
   </div>
 </div>
+
+<div style="display: flex; align-items: center; margin-bottom: 2em;">
+  <img src="/assets/images/Trixi.jpg" alt="Member Name" style="width: 150px; height: 150px; aspect-ratio: 1 / 1; border-radius: 50%; object-fit: cover; margin-right: 20px;">
+  <div>
+    <h3>Beatrix Kovacs</h3>
+    <p>Trixi is a PhD candidate at Semmelweis University. She obtained her degree in biomedical engineering from the Budapest University of Technology and Economics. Her research focuses on adeno-associated virus (AAV) vector biology and neutralizing antibody assays, including the development of a more sensitive neutralization assay for improved detection of immune responses against AAV vectors and support safer, more accessible gene therapy. Within the group, she works across molecular and in vivo experiments, linking vector design to functional outcomes.</p>
+  </div>
+</div>
