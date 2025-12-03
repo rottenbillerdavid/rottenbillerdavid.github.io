@@ -36,12 +36,12 @@
     margin: 0;
     height: 100dvh; /* Fixes mobile URL bar jumping */
     width: 100%;
-    overflow: hidden; /* No scrolling allowed */
+    overflow: hidden;
     font-family: "Georgia", serif;
     display: flex; flex-direction: column; align-items: center; justify-content: flex-start;
     background: #000; color: #e0e0e0;
     transition: background-color 1.5s ease, color 1.5s ease;
-    touch-action: none; /* Disables zoom on mobile */
+    touch-action: none;
   }
 
   /* Utility Classes */
@@ -49,7 +49,7 @@
   html.no-anim, html.no-anim * { transition: none !important; }
   .projection.happy { z-index: 4 !important; }
 
-  /* --- NAVBAR (Desktop Default) --- */
+  /* --- NAVBAR --- */
   nav {
     position: fixed; top: 0; left: 0;
     width: 100%; height: 60px;
@@ -86,7 +86,7 @@
   html.happy .nav-links a:hover { background: #000; color: #fff; }
   .nav-links a.active { border-color: currentColor; }
 
-  /* --- SCENE (Desktop Default) --- */
+  /* --- SCENE --- */
   .scene {
     position: relative; flex-grow: 1; width: 100%;
     display: flex; justify-content: center; align-items: center;
@@ -110,7 +110,7 @@
 
   .brain {
     position: absolute; top: 10%; left: 50%;
-    transform: translate(-50%, -50%); /* Centers based on top-left corner */
+    transform: translate(-50%, -50%);
     width: 60vw; max-width: 840px; z-index: 2;
   }
   .brain img { width: 100%; height: auto; display: block; position: absolute; top: 0; left: 0; transition: opacity 1.2s ease; }
@@ -155,7 +155,7 @@
   }
   #relock-button img { width: 200px; transform: translateY(40px); }
 
-  /* CORNER LINKS (Desktop Default) */
+  /* CORNER LINKS (Desktop) */
   .corner-links {
     position: fixed; inset: 0; opacity: 0; pointer-events: none; z-index: 4; transition: opacity 1.5s ease;
   }
@@ -179,112 +179,105 @@
   html.happy nav { background: #fff; color: #000; border-bottom: 2px solid #000; }
 
   /* =========================================
-     2. MOBILE VERTICAL ONLY (The Fix)
-     Only triggers on screens < 900px AND in Portrait mode
+     2. PHONE VERTICAL (PORTRAIT) ONLY
      ========================================= */
   @media screen and (max-width: 900px) and (orientation: portrait) {
     
-    /* --- NAVBAR TRANSFORMATION --- */
-    nav {
-      height: auto; /* Allow expanding to 2 lines */
-      flex-direction: column; /* Stack logo on top of links */
-      padding: 10px 0;
-      gap: 10px;
-    }
-
-    /* Transform "HillierLab" text to "HL" */
+    /* Navbar: Stacked, Big Text */
+    nav { height: auto; flex-direction: column; padding: 15px 0; gap: 5px; }
+    
     nav .brand {
-      font-size: 0; /* Hides the original text */
-      transform: scale(1); /* Reset desktop scale */
+      font-size: 1.8rem; /* Bigger */
+      transform: none;   /* Reset scale */
       padding: 0;
     }
-    nav .brand::before {
-      content: "HL"; /* Replaces it with HL */
-      font-size: 3rem; /* Huge size */
-      display: block;
-    }
-
-    /* Wrap the links to a second line */
-    .nav-links {
-      width: 100%;
-      margin: 0; padding: 0;
-      justify-content: center; /* Center them */
-      flex-wrap: wrap; /* Allow multi-line if needed */
-      gap: 5px;
-    }
-    .nav-links a {
-      font-size: 0.8rem;
-      padding: 5px 8px;
-    }
-
-    /* --- SCENE RE-ALIGNMENT --- */
     
-    /* 1. The Brain (Anchor Point) */
-    .brain {
-      width: 90vw; /* Nice and big */
-      top: 25%;    /* Position in top quarter */
+    .nav-links {
+      width: 100%; margin: 0; padding: 0;
+      justify-content: center; flex-wrap: wrap; gap: 4px;
     }
+    .nav-links a { font-size: 0.8rem; padding: 6px 8px; }
 
-    /* 2. The Blue Lock (Perfectly Over Brain) */
-    .lock {
-      width: 30vw;
-      /* Exactly match Brain's Top % so they align on center */
-      top: 25%; 
-    }
-
-    /* 3. Window & Scenery (Tucked behind/around) */
+    /* Scene: Vertical Stack */
+    .brain { width: 90vw; top: 25%; }
+    
+    /* IMAGES: Ensure visibility & position */
     .silhouette {
-      width: 25vw; top: 10%; left: 2%; opacity: 0.8;
+      width: 30vw; top: 12%; left: 2%; 
+      z-index: 1; opacity: 1; /* Forced visibility */
     }
     .projection {
-      width: 25vw; top: 10%; right: 2%; opacity: 0.8;
+      width: 30vw; top: 12%; right: 2%; 
+      z-index: 1; opacity: 1; /* Forced visibility */
+    }
+
+    /* LOCK: Bigger & Lower */
+    .lock {
+      width: 40vw; /* Increased size */
+      top: 35%;    /* Lowered to overlap brain */
     }
     
-    /* 4. Subtitle */
-    .subtitle {
-      top: 45%; /* Directly under the brain/lock */
-      font-size: 1rem;
-      padding: 0 10px;
-    }
+    .subtitle { top: 48%; font-size: 1rem; padding: 0 10px; }
 
-    /* --- CORNER LINKS (The Vertical Stack) --- */
+    /* CORNER LINKS: Vertical Stack & Clickable */
     .corner-links {
-      /* Break the fixed positioning */
-      position: absolute; 
-      top: 52%; /* Start halfway down the screen */
-      bottom: auto; left: 0; right: 0;
-      
-      /* Make it a vertical column */
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 15px;
-      
-      /* Ensure it fits */
+      position: absolute; top: 55%; bottom: auto; left: 0; right: 0;
+      display: flex; flex-direction: column; align-items: center; gap: 12px;
       height: auto;
-      pointer-events: none; /* JS will enable this later */
     }
+    
+    html.happy .corner-links a { pointer-events: auto; } /* Ensure clickable when happy */
 
-    /* Reset individual link positioning */
     .corner-links a {
-      position: relative; /* No longer absolute corners */
+      position: relative; /* Reset absolute positioning */
       top: auto !important; bottom: auto !important;
       left: auto !important; right: auto !important;
       text-align: center !important;
-      max-width: 80%;
+      max-width: 90%; font-size: 0.8rem;
     }
-    
-    .corner-links a .corner-title {
-      font-size: 1.2rem;
-    }
+    .corner-links a .corner-title { font-size: 1.1rem; }
 
-    /* --- RELOCK BUTTON --- */
-    /* Move it to the very bottom */
-    #relock-container {
-      bottom: 10px;
-      width: 100%;
-    }
+    /* Relock Button */
+    #relock-container { bottom: 10px; width: 100%; }
     #relock-button img { width: 120px; transform: translateY(10px); }
+  }
+
+  /* =========================================
+     3. PHONE HORIZONTAL (LANDSCAPE) ONLY
+     (Targeting short screens, common for phones held sideways)
+     ========================================= */
+  @media screen and (max-height: 500px) {
+    
+    /* Navbar: Fix "Way too wide" by allowing scroll */
+    nav { padding: 0 10px; }
+    nav .brand { transform: scale(1); font-size: 1rem; }
+    
+    .nav-links {
+      margin-left: 10px; padding-right: 0;
+      justify-content: flex-start;
+      overflow-x: auto; /* ENABLE SCROLL */
+      white-space: nowrap;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+    .nav-links::-webkit-scrollbar { display: none; }
+    .nav-links a { font-size: 0.8rem; padding: 4px 8px; }
+
+    /* Shrink corner links to prevent overlap */
+    .corner-links a {
+      transform: scale(0.7); /* Shrink whole element */
+      max-width: 200px;
+    }
+    .corner-links a:hover { transform: scale(0.75); }
+    
+    /* Pull them closer to corners so they don't hit the brain */
+    .corner-top-left { top: 60px; left: 20px; }
+    .corner-top-right { top: 60px; right: 20px; }
+    .corner-bottom-left { bottom: 20px; left: 20px; }
+    .corner-bottom-right { bottom: 20px; right: 20px; }
+    
+    /* Relock button smaller */
+    #relock-button img { width: 120px; transform: translateY(20px); }
   }
 </style>
 </head>
