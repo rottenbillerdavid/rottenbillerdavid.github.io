@@ -34,7 +34,7 @@
   
   html, body {
     margin: 0;
-    height: 100dvh; /* Fixes mobile URL bar jumping */
+    height: 100dvh;
     width: 100%;
     overflow: hidden;
     font-family: "Georgia", serif;
@@ -44,7 +44,6 @@
     touch-action: none;
   }
 
-  /* Utility Classes */
   html.prep body { visibility: hidden; }
   html.no-anim, html.no-anim * { transition: none !important; }
   .projection.happy { z-index: 4 !important; }
@@ -122,12 +121,14 @@
     opacity: 0; pointer-events: none; transition: opacity 0.3s ease; z-index: 3;
   }
 
-  /* Lock & Subtitle */
+  /* LOCK (With Cursor Fix) */
   .lock {
     position: absolute; top: 40%; left: 50%;
     transform: translate(-50%, -50%);
     width: 40%; opacity: 0; transition: opacity 0.6s ease;
-    cursor: pointer; z-index: 3;
+    z-index: 3;
+    /* Cursor Logic */
+    cursor: url('/assets/images/big_key2.png') 16 16, pointer; 
   }
   .scene:hover .lock { opacity: 1; }
 
@@ -151,7 +152,9 @@
   #relock-button {
     display: flex; flex-direction: column; align-items: center;
     gap: 4px; background: none; border: none; padding: 8px 12px;
-    color: rgb(110, 110, 110); cursor: pointer;
+    color: rgb(110, 110, 110);
+    /* Cursor Logic */
+    cursor: url('/assets/images/grey_key.png') 10 10, pointer;
   }
   #relock-button img { width: 200px; transform: translateY(40px); }
 
@@ -185,12 +188,7 @@
     
     /* Navbar: Stacked, Big Text */
     nav { height: auto; flex-direction: column; padding: 15px 0; gap: 5px; }
-    
-    nav .brand {
-      font-size: 1.8rem; /* Bigger */
-      transform: none;   /* Reset scale */
-      padding: 0;
-    }
+    nav .brand { font-size: 1.8rem; transform: none; padding: 0; }
     
     .nav-links {
       width: 100%; margin: 0; padding: 0;
@@ -198,38 +196,43 @@
     }
     .nav-links a { font-size: 0.8rem; padding: 6px 8px; }
 
-    /* Scene: Vertical Stack */
-    .brain { width: 90vw; top: 25%; }
-    
-    /* IMAGES: Ensure visibility & position */
+    /* --- ALTITUDE FIX --- */
+    /* Brain, Silhouette, Projection all share the same top % */
+    .brain { 
+      width: 90vw; 
+      top: 18%; /* High up to clear room below */
+    }
     .silhouette {
-      width: 30vw; top: 12%; left: 2%; 
-      z-index: 1; opacity: 1; /* Forced visibility */
+      width: 30vw; left: 2%; 
+      top: 18%; /* Same altitude as brain */
+      opacity: 1; z-index: 1;
     }
     .projection {
-      width: 30vw; top: 12%; right: 2%; 
-      z-index: 1; opacity: 1; /* Forced visibility */
+      width: 30vw; right: 2%; 
+      top: 18%; /* Same altitude as brain */
+      opacity: 1; z-index: 1;
     }
 
-    /* LOCK: Bigger & Lower */
+    /* BLUE LOCK: Bigger and Lower */
     .lock {
-      width: 40vw; /* Increased size */
-      top: 35%;    /* Lowered to overlap brain */
+      width: 50vw; /* HUGE */
+      top: 25%;    /* Lower than the brain (18%) so it overlaps nicely */
     }
     
-    .subtitle { top: 48%; font-size: 1rem; padding: 0 10px; }
+    .subtitle { top: 45%; font-size: 1rem; padding: 0 10px; }
 
     /* CORNER LINKS: Vertical Stack & Clickable */
     .corner-links {
-      position: absolute; top: 55%; bottom: auto; left: 0; right: 0;
+      position: absolute; 
+      top: 50%; /* Higher up, right under subtitle */
+      bottom: auto; left: 0; right: 0;
       display: flex; flex-direction: column; align-items: center; gap: 12px;
       height: auto;
     }
-    
-    html.happy .corner-links a { pointer-events: auto; } /* Ensure clickable when happy */
+    html.happy .corner-links a { pointer-events: auto; }
 
     .corner-links a {
-      position: relative; /* Reset absolute positioning */
+      position: relative; 
       top: auto !important; bottom: auto !important;
       left: auto !important; right: auto !important;
       text-align: center !important;
@@ -237,46 +240,48 @@
     }
     .corner-links a .corner-title { font-size: 1.1rem; }
 
-    /* Relock Button */
+    /* Relock Button (Grey Key) */
     #relock-container { bottom: 10px; width: 100%; }
     #relock-button img { width: 120px; transform: translateY(10px); }
   }
 
   /* =========================================
      3. PHONE HORIZONTAL (LANDSCAPE) ONLY
-     (Targeting short screens, common for phones held sideways)
      ========================================= */
   @media screen and (max-height: 500px) {
     
-    /* Navbar: Fix "Way too wide" by allowing scroll */
+    /* Navbar: Force scroll so items aren't hidden */
     nav { padding: 0 10px; }
     nav .brand { transform: scale(1); font-size: 1rem; }
     
     .nav-links {
-      margin-left: 10px; padding-right: 0;
-      justify-content: flex-start;
+      margin-left: 0.5rem; /* Reduce margin */
+      padding-right: 10px; /* Space at end */
+      width: 100%; /* Force full width */
+      justify-content: flex-start; /* Align left */
+      
       overflow-x: auto; /* ENABLE SCROLL */
       white-space: nowrap;
       -webkit-overflow-scrolling: touch;
       scrollbar-width: none;
     }
     .nav-links::-webkit-scrollbar { display: none; }
-    .nav-links a { font-size: 0.8rem; padding: 4px 8px; }
+    
+    .nav-links a { 
+      font-size: 0.8rem; 
+      padding: 4px 8px; 
+      flex-shrink: 0; /* Ensure they don't squish */
+    }
 
     /* Shrink corner links to prevent overlap */
-    .corner-links a {
-      transform: scale(0.7); /* Shrink whole element */
-      max-width: 200px;
-    }
+    .corner-links a { transform: scale(0.7); max-width: 200px; }
     .corner-links a:hover { transform: scale(0.75); }
     
-    /* Pull them closer to corners so they don't hit the brain */
     .corner-top-left { top: 60px; left: 20px; }
     .corner-top-right { top: 60px; right: 20px; }
     .corner-bottom-left { bottom: 20px; left: 20px; }
     .corner-bottom-right { bottom: 20px; right: 20px; }
     
-    /* Relock button smaller */
     #relock-button img { width: 120px; transform: translateY(20px); }
   }
 </style>
