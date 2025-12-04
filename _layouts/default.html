@@ -119,7 +119,6 @@
     position: absolute;
     top: 50%; left: 50%;
     transform: translate(-50%, -50%);
-    /* YOUR CALCULATED WIDTH: 1366 / 2000 = 68.3% */
     width: 68.3%; 
     height: auto;
     opacity: 0;
@@ -164,7 +163,6 @@
     left: 50%; transform: translateX(-50%);
     display: flex; flex-direction: column; align-items: center;
     opacity: 0; 
-    /* THIS FIXED THE BUG: Container controls the clicks. */
     pointer-events: none; 
     transition: opacity 0.5s ease;
     z-index: 10000; 
@@ -175,7 +173,7 @@
     background: none; border: none; padding: 8px 12px;
     color: rgb(110, 110, 110);
     cursor: url('/assets/images/grey_key.png') 10 10, pointer;
-    /* FIX: Removed 'pointer-events: auto' so it doesn't override the parent in dark mode */
+    /* pointer-events: auto removed to fix dark mode bug */
   }
   
   #relock-button img { 
@@ -239,13 +237,10 @@
 
     .composite-container { width: 100vw; max-width: none; }
     
-    /* Mobile Subtitle */
     .subtitle { top: auto; bottom: -15%; font-size: 1rem; padding: 0 10px; }
 
-    /* Corner Links: Moved Higher */
     .corner-links {
       position: absolute; 
-      /* CHANGED: Moved up from 45% to 40% */
       top: 40%; 
       bottom: auto; left: 0; right: 0;
       display: flex; flex-direction: column; align-items: center; 
@@ -258,10 +253,9 @@
       white-space: normal; 
     }
     
-    /* Grey Lock Lower */
+    /* FIX: Moved Grey Lock to 0px (very bottom) */
     #relock-container { 
-      /* CHANGED: Moved down from 20px to 10px */
-      bottom: 10px; 
+      bottom: 0px; 
     }
     #relock-button img { width: 150px; }
   }
@@ -363,10 +357,14 @@ let unlocked = sessionStorage.getItem('hl_unlocked') === '1';
 function showRelock() {
   relockContainer.style.opacity = '1';
   relockContainer.style.pointerEvents = 'auto';
+  // Manually enable pointer events on the button when showing
+  relockButton.style.pointerEvents = 'auto';
 }
 function hideRelock() {
   relockContainer.style.opacity = '0';
   relockContainer.style.pointerEvents = 'none';
+  // Manually disable pointer events on the button when hiding
+  relockButton.style.pointerEvents = 'none';
 }
 
 function startHappyTransition() {
