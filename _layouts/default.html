@@ -92,8 +92,8 @@
     display: flex; 
     justify-content: center; 
     align-items: flex-start; 
-    /* CHANGED: Increased from 4vh to 8vh to push image lower */
-    padding-top: 8vh; 
+    /* CHANGED: Increased from 8vh to 10vh to move everything down ~20px */
+    padding-top: 10vh; 
   }
 
   .composite-container {
@@ -131,11 +131,10 @@
   /* LOCK OVERLAY */
   .lock {
     position: absolute;
-    /* CHANGED: Moved up from 50% to 42% */
     top: 42%; 
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 50%; /* Large size */
+    width: 50%; 
     z-index: 4;
     cursor: url('/assets/images/big_key2.png') 16 16, pointer;
     transition: opacity 0.6s ease;
@@ -145,7 +144,8 @@
   /* SUBTITLE */
   .subtitle {
     position: absolute; 
-    bottom: -8%; 
+    /* CHANGED: Moved from bottom:-8% to top:82% to sit right under brain */
+    top: 82%; 
     left: 0; width: 100%; text-align: center;
     font-size: 1.2rem; color: #e0e0e0; transition: color 1s ease;
     pointer-events: none; 
@@ -162,23 +162,26 @@
   /* RELOCK BUTTON (Grey Lock) */
   #relock-container {
     position: absolute; 
-    bottom: 20px; left: 50%; transform: translateX(-50%);
+    /* CHANGED: Moved up from 20px to 80px */
+    bottom: 80px; 
+    left: 50%; transform: translateX(-50%);
     display: flex; flex-direction: column; align-items: center;
     opacity: 0; 
-    /* Important: Container handles the pointer-events now */
     pointer-events: none; 
     transition: opacity 0.5s ease;
     z-index: 10000; 
   }
   #relock-button {
     display: flex; flex-direction: column; align-items: center;
-    gap: 4px; background: none; border: none; padding: 8px 12px;
+    /* CHANGED: Reduced gap to 0 so text is closer */
+    gap: 0; 
+    background: none; border: none; padding: 8px 12px;
     color: rgb(110, 110, 110);
     cursor: url('/assets/images/grey_key.png') 10 10, pointer;
-    /* CHANGED: Removed pointer-events: auto so it respects parent opacity */
+    pointer-events: auto; /* Clickable */
   }
-  /* CHANGED: Increased size from 140px to 180px */
-  #relock-button img { width: 180px; transform: translateY(20px); }
+  /* CHANGED: Increased size from 180px to 260px */
+  #relock-button img { width: 260px; transform: translateY(20px); }
 
   /* CORNER LINKS */
   .corner-links {
@@ -220,7 +223,8 @@
     .nav-links a { font-size: 0.8rem; padding: 6px 8px; }
 
     .composite-container { width: 100vw; max-width: none; }
-    .subtitle { bottom: -15%; font-size: 1rem; padding: 0 10px; }
+    /* Mobile Subtitle: Adjusted to not overlap */
+    .subtitle { top: auto; bottom: -15%; font-size: 1rem; padding: 0 10px; }
 
     .corner-links {
       position: absolute; top: 62%; bottom: auto; left: 0; right: 0;
@@ -231,6 +235,10 @@
       left: auto !important; right: auto !important; text-align: center !important;
       max-width: 90%;
     }
+    
+    /* Adjust Relock for Mobile if it's too high */
+    #relock-container { bottom: 20px; }
+    #relock-button img { width: 150px; }
   }
 
   /* =========================================
@@ -254,6 +262,9 @@
     .corner-top-right { top: 50px; right: 10px; }
     .corner-bottom-left { bottom: 10px; left: 10px; }
     .corner-bottom-right { bottom: 10px; right: 10px; }
+    
+    #relock-container { bottom: 10px; }
+    #relock-button img { width: 120px; }
   }
 </style>
 </head>
