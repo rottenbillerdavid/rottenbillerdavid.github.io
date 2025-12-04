@@ -29,12 +29,11 @@
 
 <style>
   /* =========================================
-     1. GLOBAL & DESKTOP STYLES (The Base)
+     1. GLOBAL & RESET
      ========================================= */
-  
   html, body {
     margin: 0;
-    height: 100dvh; /* Fixes mobile URL bar jumping */
+    height: 100dvh; /* Fixes mobile jumping */
     width: 100%;
     overflow: hidden;
     font-family: "Georgia", serif;
@@ -43,13 +42,14 @@
     transition: background-color 1.5s ease, color 1.5s ease;
     touch-action: none;
   }
-
-  /* Utility Classes */
+  
   html.prep body { visibility: hidden; }
   html.no-anim, html.no-anim * { transition: none !important; }
   .projection.happy { z-index: 4 !important; }
 
-  /* --- NAVBAR --- */
+  /* =========================================
+     2. NAVBAR (Fixed & Scrollable)
+     ========================================= */
   nav {
     position: fixed; top: 0; left: 0;
     width: 100%; height: 60px;
@@ -72,7 +72,7 @@
   .nav-links {
     display: flex; justify-content: flex-end; align-items: center;
     gap: 1rem; flex-grow: 1; margin-left: 2rem;
-    padding-right: calc(1.5rem + 38px); box-sizing: border-box;
+    padding-right: 0; box-sizing: border-box;
   }
   .nav-links a {
     color: inherit; text-decoration: none;
@@ -86,80 +86,86 @@
   html.happy .nav-links a:hover { background: #000; color: #fff; }
   .nav-links a.active { border-color: currentColor; }
 
-  /* --- SCENE (The Locked "Center Spine" Layout) --- */
+  /* =========================================
+     3. SCENE - THE "HARD BURN" LAYOUT
+     All positions anchored to Center Spine (left: 50%)
+     ========================================= */
   .scene {
     position: relative; flex-grow: 1; width: 100%;
-    /* No flex centering here, we use absolute centering below */
     margin-top: 60px;
   }
 
-  /* KEY FIX: All images anchored to left: 50% (Center Spine).
-     Margins move them relative to the center.
-     This locks their positions relative to each other 
-     regardless of screen width (Mac vs Windows vs Mobile).
-  */
-
-  /* THE BRAIN (Center) */
+  /* --- THE BRAIN (Center) --- */
   .brain {
     position: absolute; 
-    left: 50%;           /* Anchor to spine */
-    transform: translateX(-50%); /* Center perfectly */
-    top: 10%; 
+    left: 50%; transform: translateX(-50%); /* Always centered horizontally */
+    
+    /* DESKTOP VALUES (The Gold Standard) */
     width: 60vw; max-width: 840px; 
+    top: 5%; /* Higher up to leave room */
     z-index: 2;
   }
   .brain img { width: 100%; height: auto; display: block; position: absolute; top: 0; left: 0; transition: opacity 1.2s ease; }
   .brain-animation { position: absolute; top: 0; left: 0; width: 100%; height: auto; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; z-index: 3; }
   
-  /* HAPPY/GLOOMY LOGIC */
   .brain img.happy { opacity: 0; z-index: 2; }
   .brain img.gloomy { z-index: 1; }
 
-  /* THE WINDOW (Left) */
+  /* --- THE WINDOW (Left) --- */
   .silhouette {
     position: absolute; 
-    left: 50%;           /* Anchor to spine */
-    margin-left: -46vw;  /* Push Left (Calculation: -35vw width - 11vw gap) */
-    top: 20%;            /* Lower than brain, per Windows design */
-    width: 35vw; max-width: 800px; 
-    z-index: 1;
+    left: 50%; /* Anchor to spine */
+    
+    /* DESKTOP: Push Left by 46vw */
+    margin-left: -46vw; 
+    
+    /* DESKTOP: Exactly 10% lower than brain top */
+    top: 15%; 
+    
+    width: 35vw; max-width: 800px; z-index: 1;
   }
   .silhouette img { position: absolute; width: 100%; height: auto; top: 0; left: 0; transition: opacity 1.2s ease; }
   .silhouette img.happy { opacity: 0; }
   
-  /* THE SCENERY (Right) */
+  /* --- THE SCENERY (Right) --- */
   .projection {
     position: absolute; 
-    left: 50%;          /* Anchor to spine */
-    margin-left: 13vw;  /* Push Right (Starts at center + 13vw) */
-    top: 25%;           /* Lower than brain, per Windows design */
+    left: 50%; /* Anchor to spine */
+    
+    /* DESKTOP: Push Right by 16vw (Calculated from right:7%) */
+    margin-left: 16vw;
+    
+    /* DESKTOP: Exactly 15% lower than brain top */
+    top: 20%;
+    
     width: 30vw; max-width: 800px;
     transition: opacity 1.2s ease; z-index: 4;
   }
   .projection.happy { opacity: 0; }
 
-  /* LOCK */
+  /* --- THE LOCK --- */
   .lock {
     position: absolute; 
-    left: 50%; top: 40%;
-    transform: translate(-50%, -50%);
+    left: 50%; transform: translateX(-50%);
+    
+    /* DESKTOP: Centered on brain mass */
+    top: 35%;
+    
     width: 40%; opacity: 0; transition: opacity 0.6s ease;
     z-index: 3;
     cursor: url('/assets/images/big_key2.png') 16 16, pointer; 
   }
   .scene:hover .lock { opacity: 1; }
 
+  /* --- SUBTITLE --- */
   .subtitle {
-    position: absolute; top: 68%; width: 100%; text-align: center;
+    position: absolute; 
+    top: 65%; /* Fixed altitude */
+    width: 100%; text-align: center;
     font-size: 1.2rem; color: #e0e0e0; transition: color 1s ease;
   }
 
-  /* Happy Mode toggles */
-  html.happy .silhouette img.gloomy, html.happy .brain img.gloomy, html.happy .projection.gloomy { opacity: 0; }
-  html.happy .silhouette img.happy, html.happy .brain img.happy, html.happy .projection.happy { opacity: 1; }
-  html.happy .subtitle { color: #000; }
-  html.happy .lock { display: none; }
-
+  /* --- RELOCK BUTTON --- */
   #relock-container {
     position: absolute; bottom: 40px; left: 50%;
     transform: translateX(-50%);
@@ -174,7 +180,7 @@
   }
   #relock-button img { width: 200px; transform: translateY(40px); }
 
-  /* CORNER LINKS (Desktop) */
+  /* --- CORNER LINKS (Desktop) --- */
   .corner-links {
     position: fixed; inset: 0; opacity: 0; pointer-events: none; z-index: 4; transition: opacity 1.5s ease;
   }
@@ -193,124 +199,119 @@
   .corner-bottom-left { bottom: 80px; left: 120px; text-align: left; }
   .corner-bottom-right { bottom: 80px; right: 120px; text-align: right; }
 
-  /* Happy Mode Colors */
+  /* Happy Mode Toggles */
+  html.happy .silhouette img.gloomy, html.happy .brain img.gloomy, html.happy .projection.gloomy { opacity: 0; }
+  html.happy .silhouette img.happy, html.happy .brain img.happy, html.happy .projection.happy { opacity: 1; }
+  html.happy .subtitle { color: #000; }
+  html.happy .lock { display: none; }
   html.happy, html.happy body { background: #fff; color: #000; }
   html.happy nav { background: #fff; color: #000; border-bottom: 2px solid #000; }
 
   /* =========================================
-     2. PHONE VERTICAL (PORTRAIT)
+     4. PHONE PORTRAIT (VERTICAL)
+     Scales the Desktop layout but keeps relatives
      ========================================= */
   @media screen and (max-width: 900px) and (orientation: portrait) {
     
     /* Navbar: Stacked, Big Text */
     nav { height: auto; flex-direction: column; padding: 15px 0; gap: 5px; }
     nav .brand { font-size: 1.8rem; transform: none; padding: 0; }
-    
-    .nav-links {
-      width: 100%; margin: 0; padding: 0;
-      justify-content: center; flex-wrap: wrap; gap: 4px;
-    }
+    .nav-links { width: 100%; margin: 0; padding: 0; justify-content: center; flex-wrap: wrap; gap: 4px; }
     .nav-links a { font-size: 0.8rem; padding: 6px 8px; }
 
-    /* --- LOCKED RELATIVE POSITIONS (Vertical Stack) --- */
+    /* --- "HARD BURN" RELATIVE POSITIONS --- */
     
-    /* Brain is the anchor at 25% down */
+    /* 1. Brain (Anchor) */
     .brain { 
       width: 90vw; 
-      top: 25%; 
-      left: 50%; transform: translateX(-50%); /* Center */
+      top: 25%; /* Mobile Start Point */
     }
 
-    /* Window: Forced behind brain, same relative altitude offset as desktop */
+    /* 2. Window (Left) */
     .silhouette {
-      width: 40vw; /* Visible size */
-      left: 50%; 
-      margin-left: -45vw; /* Push to left edge */
-      top: 28%; /* Just slightly lower than brain (25%) -> preserves relationship */
+      width: 40vw; 
+      /* Push OUT further than desktop to prevent "too close" feel on small screen */
+      margin-left: -48vw; 
+      /* EXACTLY 10% lower than brain (25% + 10% = 35%) */
+      top: 35%; 
       opacity: 1; z-index: 1;
     }
 
-    /* Scenery: Forced behind brain */
+    /* 3. Scenery (Right) */
     .projection {
       width: 40vw; 
-      left: 50%; 
-      margin-left: 5vw; /* Push to right edge */
-      top: 30%; /* Lower than brain -> preserves relationship */
+      /* Push OUT further than desktop */
+      margin-left: 8vw; 
+      /* EXACTLY 15% lower than brain (25% + 15% = 40%) */
+      top: 40%;
       opacity: 1; z-index: 1;
     }
 
-    /* BLUE LOCK: Bigger and Lower */
+    /* 4. Lock */
     .lock {
       width: 50vw; 
-      top: 35%; /* Centered visually over the brain mass */
+      /* EXACTLY 10% lower than brain top (Centers on brain) */
+      top: 35%;
     }
     
+    /* 5. Subtitle & Links */
     .subtitle { top: 50%; font-size: 1rem; padding: 0 10px; }
 
-    /* CORNER LINKS: Vertical Stack & Clickable */
     .corner-links {
-      position: absolute; 
-      top: 55%; /* Right under subtitle */
-      bottom: auto; left: 0; right: 0;
-      display: flex; flex-direction: column; align-items: center; gap: 12px;
-      height: auto;
+      position: absolute; top: 55%; bottom: auto; left: 0; right: 0;
+      display: flex; flex-direction: column; align-items: center; gap: 12px; height: auto;
     }
     html.happy .corner-links a { pointer-events: auto; }
-
     .corner-links a {
-      position: relative; 
-      top: auto !important; bottom: auto !important;
-      left: auto !important; right: auto !important;
-      text-align: center !important;
+      position: relative; top: auto !important; bottom: auto !important;
+      left: auto !important; right: auto !important; text-align: center !important;
       max-width: 90%; font-size: 0.8rem;
     }
-    .corner-links a .corner-title { font-size: 1.1rem; }
-
+    
     #relock-container { bottom: 10px; width: 100%; }
     #relock-button img { width: 120px; transform: translateY(10px); }
   }
 
   /* =========================================
-     3. PHONE HORIZONTAL (LANDSCAPE)
-     Forces the "Desktop" Layout but scaled down
+     5. PHONE LANDSCAPE (HORIZONTAL)
      ========================================= */
   @media screen and (max-height: 500px) {
     
-    /* Navbar: Force scroll so "Contact" is visible */
+    /* Navbar: Full Width Scrolling */
     nav { padding: 0 10px; }
     nav .brand { transform: scale(1); font-size: 1rem; }
     
     .nav-links {
       margin-left: 0.5rem; 
-      padding-right: 10px; 
       width: 100%; 
-      justify-content: flex-start; /* Align left */
+      justify-content: flex-start;
+      padding-right: 20px; /* Extra buffer for last item */
       
-      overflow-x: auto; /* ENABLE SCROLL */
+      overflow-x: auto; 
       white-space: nowrap;
       -webkit-overflow-scrolling: touch;
       scrollbar-width: none;
     }
     .nav-links::-webkit-scrollbar { display: none; }
+    .nav-links a { font-size: 0.8rem; padding: 4px 8px; flex-shrink: 0; }
+
+    /* Scaled Down Desktop Layout */
+    .brain { top: 15%; width: 50vw; }
     
-    .nav-links a { 
-      font-size: 0.8rem; 
-      padding: 4px 8px; 
-      flex-shrink: 0; 
+    .silhouette { 
+      top: 25%; /* Brain + 10% */
+      width: 30vw; margin-left: -40vw; 
+    }
+    .projection { 
+      top: 30%; /* Brain + 15% */
+      width: 25vw; margin-left: 10vw; 
     }
 
-    /* Reuse the Center-Spine layout from Desktop, just ensure top% works */
-    .brain { top: 15%; width: 50vw; }
-    .silhouette { top: 22%; width: 30vw; margin-left: -40vw; } /* Tighter margins */
-    .projection { top: 25%; width: 25vw; margin-left: 10vw; }
-
-    .lock { width: 25vw; top: 40%; }
+    .lock { width: 25vw; top: 25%; /* Aligned with Window */ }
     
-    /* Shrink corner links to prevent overlap */
+    /* Tiny Corner Links */
     .corner-links a { transform: scale(0.65); max-width: 200px; }
     .corner-links a:hover { transform: scale(0.7); }
-    
-    /* Pull them extremely tight to corners */
     .corner-top-left { top: 50px; left: 10px; }
     .corner-top-right { top: 50px; right: 10px; }
     .corner-bottom-left { bottom: 10px; left: 10px; }
