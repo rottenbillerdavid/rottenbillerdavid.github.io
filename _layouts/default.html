@@ -52,6 +52,7 @@
     padding: 0 2.5rem; z-index: 10; border-bottom: 2px solid #fff;
     transition: background-color 1.2s ease, color 1.2s ease, border-color 1.2s ease;
     box-sizing: border-box;
+    pointer-events: auto; /* Always clickable */
   }
   nav .brand {
     font-weight: bold; font-size: 1.25rem;
@@ -81,7 +82,7 @@
   .nav-links a.active { border-color: currentColor; }
 
   /* =========================================
-     3. THE SCENE (COMPOSITE METHOD)
+     3. THE SCENE
      ========================================= */
   .scene {
     position: relative;
@@ -90,10 +91,10 @@
     margin-top: 60px; 
     display: flex; 
     justify-content: center; 
-    align-items: center; 
+    align-items: flex-start; /* Aligns to top */
+    padding-top: 4vh; /* Push down slightly from navbar */
   }
 
-  /* Container Size: Reduced to 80vw for desktop to match original feel */
   .composite-container {
     position: relative;
     width: 80vw;      
@@ -101,39 +102,25 @@
     height: auto;
   }
 
-  /* The Composite Images */
+  /* Images */
   .comp-img {
-    width: 100%;
-    height: auto;
-    display: block;
-    position: relative; 
+    width: 100%; height: auto; display: block; position: relative; 
     transition: opacity 1.2s ease;
   }
-  
-  /* Gloomy is base */
-  .comp-img.gloomy { 
-    z-index: 1; 
-    opacity: 1; 
-  }
-  
-  /* Happy sits on top */
+  .comp-img.gloomy { z-index: 1; opacity: 1; }
   .comp-img.happy { 
     position: absolute; top: 0; left: 0;
-    z-index: 2; 
-    opacity: 0; 
-    /* Fix: Disable pointer events when invisible so it doesn't block clicks */
+    z-index: 2; opacity: 0; 
     pointer-events: none; 
   }
 
-  /* VIDEO OVERLAY (The Animation) */
+  /* VIDEO OVERLAY */
   .brain-animation {
     position: absolute;
     top: 50%; left: 50%;
     transform: translate(-50%, -50%);
-    
     /* YOUR CALCULATED WIDTH: 1366 / 2000 = 68.3% */
     width: 68.3%; 
-    
     height: auto;
     opacity: 0;
     pointer-events: none;
@@ -145,7 +132,8 @@
     position: absolute;
     top: 50%; left: 50%;
     transform: translate(-50%, -50%);
-    width: 25%;
+    /* RESTORED: 50% of container (which is 80vw) = 40vw total */
+    width: 50%;
     z-index: 4;
     cursor: url('/assets/images/big_key2.png') 16 16, pointer;
     transition: opacity 0.6s ease;
@@ -155,58 +143,61 @@
   /* SUBTITLE */
   .subtitle {
     position: absolute; 
-    bottom: -5%; 
+    bottom: -8%; 
     left: 0; width: 100%; text-align: center;
     font-size: 1.2rem; color: #e0e0e0; transition: color 1s ease;
-    /* Fix: Allow clicks to pass through subtitle area */
     pointer-events: none; 
   }
 
   /* HAPPY MODE LOGIC */
-  /* Fix: Hide gloomy completely when happy to prevent ghosting */
   html.happy .comp-img.gloomy { opacity: 0; }
-  
   html.happy .comp-img.happy  { opacity: 1; pointer-events: auto; }
   html.happy .subtitle { color: #000; }
   html.happy .lock { display: none; }
   html.happy, html.happy body { background: #fff; color: #000; }
   html.happy nav { background: #fff; color: #000; border-bottom: 2px solid #000; }
 
-  /* RELOCK BUTTON */
+  /* RELOCK BUTTON (Grey Lock) */
   #relock-container {
     position: absolute; 
     bottom: 20px; left: 50%; transform: translateX(-50%);
     display: flex; flex-direction: column; align-items: center;
     opacity: 0; pointer-events: none; transition: opacity 0.5s ease;
-    /* Fix: Very high Z-index to ensure it sits on top */
-    z-index: 9999; 
+    /* Highest Z-Index to stay on top */
+    z-index: 10000; 
   }
   #relock-button {
     display: flex; flex-direction: column; align-items: center;
     gap: 4px; background: none; border: none; padding: 8px 12px;
     color: rgb(110, 110, 110);
     cursor: url('/assets/images/grey_key.png') 10 10, pointer;
-    /* Ensure the button itself captures clicks */
-    pointer-events: auto; 
+    /* Force clickability */
+    pointer-events: auto !important; 
   }
   #relock-button img { width: 140px; transform: translateY(20px); }
 
-  /* CORNER LINKS */
+  /* CORNER LINKS (THE FIX) */
   .corner-links {
-    position: fixed; inset: 0; opacity: 0; pointer-events: none; 
-    transition: opacity 1.5s ease;
-    /* Fix: High Z-index */
+    position: fixed; inset: 0; opacity: 0; 
     z-index: 9999; 
+    transition: opacity 1.5s ease;
+    /* FIX: Container is NEVER clickable, so it can't block the screen */
+    pointer-events: none !important; 
   }
-  html.happy .corner-links { pointer-events: auto; }
   
   .corner-links a {
     position: absolute; font-size: 0.9rem; text-decoration: none; color: inherit;
-    pointer-events: none; /* Initially disabled */
+    /* Links start disabled */
+    pointer-events: none; 
     transition: opacity 0.8s ease, color 0.6s ease, transform 0.6s ease;
     max-width: 200px; line-height: 1.2; opacity: 0; text-align: center;
   }
-  html.happy .corner-links a { pointer-events: auto; } /* Enable when happy */
+
+  /* When happy, only enable clicks on the text anchors, NOT the container */
+  html.happy .corner-links a { 
+    pointer-events: auto; 
+    cursor: pointer;
+  }
   
   .corner-links a:hover { transform: scale(1.05); }
   .corner-links a .corner-title { display: block; font-size: 1.4rem; font-weight: bold; margin-bottom: 5px; }
@@ -230,7 +221,7 @@
     .composite-container { width: 100vw; max-width: none; }
     .subtitle { bottom: -15%; font-size: 1rem; padding: 0 10px; }
 
-    /* Stack Corner Links */
+    /* Vertical Stack Links */
     .corner-links {
       position: absolute; top: 62%; bottom: auto; left: 0; right: 0;
       display: flex; flex-direction: column; align-items: center; gap: 10px;
@@ -346,7 +337,7 @@ function startHappyTransition() {
   if (document.documentElement.classList.contains('happy')) return;
   document.documentElement.classList.add('happy');
 
-  // Crossfade images manually to ensure gloomy disappears
+  // Crossfade
   imgHappy.style.opacity = '1';
   imgGloomy.style.opacity = '0';
 
@@ -391,7 +382,6 @@ lock.addEventListener('click', e => {
   brainAnim.style.opacity = '1';
   brainAnim.playbackRate = 0.77;
   
-  // Ensure gloomy is visible underneath initially
   imgGloomy.style.opacity = '1';
   imgHappy.style.opacity = '0';
 
@@ -410,7 +400,6 @@ lock.addEventListener('click', e => {
       brainAnim.style.transition = 'opacity 1s ease';
       brainAnim.style.opacity = '0';
       
-      // Perform Crossfade
       imgHappy.style.opacity = '1';
       imgGloomy.style.opacity = '0';
     }
