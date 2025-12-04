@@ -272,11 +272,18 @@
   @media screen and (max-height: 500px) {
     nav { padding: 0 10px; }
     nav .brand { transform: scale(1); font-size: 1rem; }
-    .nav-links {
-      margin-left: 0.5rem; width: 100%; justify-content: flex-start;
-      padding-right: 20px; overflow-x: auto; white-space: nowrap;
-      -webkit-overflow-scrolling: touch; scrollbar-width: none;
-    }
+   .nav-links {
+  flex-grow: 1; /* Automatically fills space */
+  width: auto;  /* Stops forcing 100% width */
+  margin-left: 10px;
+  margin-right: 10px; 
+  
+  justify-content: flex-start;
+  overflow-x: auto; 
+  white-space: nowrap;
+  -webkit-overflow-scrolling: touch; 
+  scrollbar-width: none;
+  }
     .nav-links::-webkit-scrollbar { display: none; }
     .nav-links a { font-size: 0.8rem; padding: 4px 8px; flex-shrink: 0; }
     
