@@ -173,7 +173,6 @@
     background: none; border: none; padding: 8px 12px;
     color: rgb(110, 110, 110);
     cursor: url('/assets/images/grey_key.png') 10 10, pointer;
-    /* pointer-events: auto removed to fix dark mode bug */
   }
   
   #relock-button img { 
@@ -237,8 +236,10 @@
 
     .composite-container { width: 100vw; max-width: none; }
     
+    /* Mobile Subtitle */
     .subtitle { top: auto; bottom: -15%; font-size: 1rem; padding: 0 10px; }
 
+    /* Corner Links: Moved Higher */
     .corner-links {
       position: absolute; 
       top: 40%; 
@@ -253,10 +254,7 @@
       white-space: normal; 
     }
     
-    /* FIX: Moved Grey Lock to 0px (very bottom) */
-    #relock-container { 
-      bottom: 0px; 
-    }
+    #relock-container { bottom: 0px; }
     #relock-button img { width: 150px; }
   }
 
@@ -275,6 +273,15 @@
     .nav-links a { font-size: 0.8rem; padding: 4px 8px; flex-shrink: 0; }
     
     .composite-container { width: 60vw; }
+    
+    /* SUBTITLE OVER BRAIN (Landscape Only) */
+    .subtitle {
+      top: 65%; /* Sits on lower part of brain */
+      bottom: auto;
+      font-size: 0.9rem;
+      padding: 0 10px;
+      z-index: 10; /* Ensures it sits on top */
+    }
     
     .corner-links a { transform: scale(0.65); max-width: 180px; white-space: normal; }
     .corner-top-left { top: 50px; left: 10px; }
