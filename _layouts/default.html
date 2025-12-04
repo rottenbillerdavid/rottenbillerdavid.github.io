@@ -28,7 +28,7 @@
      ========================================= */
   html, body {
     margin: 0;
-    height: 100dvh; /* Mobile jump fix */
+    height: 100dvh;
     width: 100%;
     overflow: hidden;
     font-family: "Georgia", serif;
@@ -87,17 +87,17 @@
     position: relative;
     flex-grow: 1; 
     width: 100%;
-    margin-top: 60px; /* Offset for Navbar */
+    margin-top: 60px; 
     display: flex; 
     justify-content: center; 
     align-items: center; 
   }
 
-  /* The Container for the "Super Canvas" Images */
+  /* Container Size: Reduced to 80vw for desktop to match original feel */
   .composite-container {
     position: relative;
-    width: 95vw;      
-    max-width: 1600px; 
+    width: 80vw;      
+    max-width: 1400px; 
     height: auto;
   }
 
@@ -110,20 +110,28 @@
     transition: opacity 1.2s ease;
   }
   
-  /* Stacking: Happy sits absolutely on top of Gloomy */
-  .comp-img.gloomy { z-index: 1; opacity: 1; }
-  .comp-img.happy  { 
+  /* Gloomy is base */
+  .comp-img.gloomy { 
+    z-index: 1; 
+    opacity: 1; 
+  }
+  
+  /* Happy sits on top */
+  .comp-img.happy { 
     position: absolute; top: 0; left: 0;
-    z-index: 2; opacity: 0; 
+    z-index: 2; 
+    opacity: 0; 
+    /* Fix: Disable pointer events when invisible so it doesn't block clicks */
+    pointer-events: none; 
   }
 
-  /* VIDEO OVERLAY */
+  /* VIDEO OVERLAY (The Animation) */
   .brain-animation {
     position: absolute;
     top: 50%; left: 50%;
     transform: translate(-50%, -50%);
     
-    /* CALCULATED: 1366 / 2000 = 68.3% */
+    /* YOUR CALCULATED WIDTH: 1366 / 2000 = 68.3% */
     width: 68.3%; 
     
     height: auto;
@@ -137,7 +145,7 @@
     position: absolute;
     top: 50%; left: 50%;
     transform: translate(-50%, -50%);
-    width: 25%; /* Size relative to the composite image */
+    width: 25%;
     z-index: 4;
     cursor: url('/assets/images/big_key2.png') 16 16, pointer;
     transition: opacity 0.6s ease;
@@ -147,13 +155,18 @@
   /* SUBTITLE */
   .subtitle {
     position: absolute; 
-    bottom: -5%; /* Just below the image */
+    bottom: -5%; 
     left: 0; width: 100%; text-align: center;
     font-size: 1.2rem; color: #e0e0e0; transition: color 1s ease;
+    /* Fix: Allow clicks to pass through subtitle area */
+    pointer-events: none; 
   }
 
-  /* HAPPY MODE TOGGLES */
-  html.happy .comp-img.happy  { opacity: 1; }
+  /* HAPPY MODE LOGIC */
+  /* Fix: Hide gloomy completely when happy to prevent ghosting */
+  html.happy .comp-img.gloomy { opacity: 0; }
+  
+  html.happy .comp-img.happy  { opacity: 1; pointer-events: auto; }
   html.happy .subtitle { color: #000; }
   html.happy .lock { display: none; }
   html.happy, html.happy body { background: #fff; color: #000; }
@@ -164,26 +177,37 @@
     position: absolute; 
     bottom: 20px; left: 50%; transform: translateX(-50%);
     display: flex; flex-direction: column; align-items: center;
-    opacity: 0; pointer-events: none; transition: opacity 0.5s ease; z-index: 5;
+    opacity: 0; pointer-events: none; transition: opacity 0.5s ease;
+    /* Fix: Very high Z-index to ensure it sits on top */
+    z-index: 9999; 
   }
   #relock-button {
     display: flex; flex-direction: column; align-items: center;
     gap: 4px; background: none; border: none; padding: 8px 12px;
     color: rgb(110, 110, 110);
     cursor: url('/assets/images/grey_key.png') 10 10, pointer;
+    /* Ensure the button itself captures clicks */
+    pointer-events: auto; 
   }
   #relock-button img { width: 140px; transform: translateY(20px); }
 
   /* CORNER LINKS */
   .corner-links {
-    position: fixed; inset: 0; opacity: 0; pointer-events: none; z-index: 5; transition: opacity 1.5s ease;
+    position: fixed; inset: 0; opacity: 0; pointer-events: none; 
+    transition: opacity 1.5s ease;
+    /* Fix: High Z-index */
+    z-index: 9999; 
   }
   html.happy .corner-links { pointer-events: auto; }
+  
   .corner-links a {
     position: absolute; font-size: 0.9rem; text-decoration: none; color: inherit;
-    pointer-events: none; transition: opacity 0.8s ease, color 0.6s ease, transform 0.6s ease;
+    pointer-events: none; /* Initially disabled */
+    transition: opacity 0.8s ease, color 0.6s ease, transform 0.6s ease;
     max-width: 200px; line-height: 1.2; opacity: 0; text-align: center;
   }
+  html.happy .corner-links a { pointer-events: auto; } /* Enable when happy */
+  
   .corner-links a:hover { transform: scale(1.05); }
   .corner-links a .corner-title { display: block; font-size: 1.4rem; font-weight: bold; margin-bottom: 5px; }
 
@@ -197,24 +221,16 @@
      4. MOBILE PORTRAIT (Vertical)
      ========================================= */
   @media screen and (max-width: 900px) and (orientation: portrait) {
-    
-    /* Navbar: Stacked with HL Logo */
     nav { height: auto; flex-direction: column; padding: 15px 0; gap: 5px; }
     nav .brand { font-size: 0; transform: scale(1); padding: 0; }
     nav .brand::before { content: "HL"; font-size: 3rem; display: block; }
     .nav-links { width: 100%; margin: 0; padding: 0; justify-content: center; flex-wrap: wrap; gap: 4px; }
     .nav-links a { font-size: 0.8rem; padding: 6px 8px; }
 
-    /* Scene: Full Width */
-    .composite-container {
-      width: 100vw; 
-      max-width: none;
-    }
-    
-    /* Subtitle: Lower */
+    .composite-container { width: 100vw; max-width: none; }
     .subtitle { bottom: -15%; font-size: 1rem; padding: 0 10px; }
 
-    /* Corner Links: Vertical Stack */
+    /* Stack Corner Links */
     .corner-links {
       position: absolute; top: 62%; bottom: auto; left: 0; right: 0;
       display: flex; flex-direction: column; align-items: center; gap: 10px;
@@ -230,8 +246,6 @@
      5. MOBILE LANDSCAPE (Horizontal)
      ========================================= */
   @media screen and (max-height: 500px) {
-    
-    /* Navbar: Scrollable */
     nav { padding: 0 10px; }
     nav .brand { transform: scale(1); font-size: 1rem; }
     .nav-links {
@@ -242,10 +256,8 @@
     .nav-links::-webkit-scrollbar { display: none; }
     .nav-links a { font-size: 0.8rem; padding: 4px 8px; flex-shrink: 0; }
     
-    /* Scene */
-    .composite-container { width: 60vw; } /* Make it smaller so margins fit */
+    .composite-container { width: 60vw; }
     
-    /* Tiny Corners */
     .corner-links a { transform: scale(0.65); max-width: 180px; }
     .corner-top-left { top: 50px; left: 10px; }
     .corner-top-right { top: 50px; right: 10px; }
@@ -310,8 +322,9 @@
 
 <script>
 const lock = document.getElementById('lock');
-const imgHappy = document.querySelector('.comp-img.happy');
-const subtitle = document.getElementById('subtitle');
+const imgGloomy = document.querySelector('.comp-img.gloomy');
+const imgHappy  = document.querySelector('.comp-img.happy');
+const subtitle  = document.getElementById('subtitle');
 const cornerLinks = document.getElementById('corner-links');
 const cornerAnchors = cornerLinks.querySelectorAll('a');
 const relockContainer = document.getElementById('relock-container');
@@ -333,8 +346,9 @@ function startHappyTransition() {
   if (document.documentElement.classList.contains('happy')) return;
   document.documentElement.classList.add('happy');
 
-  // Fade in happy image
+  // Crossfade images manually to ensure gloomy disappears
   imgHappy.style.opacity = '1';
+  imgGloomy.style.opacity = '0';
 
   // Show links
   cornerLinks.style.opacity = '1';
@@ -348,8 +362,11 @@ function applyUnlockedImmediate() {
   document.documentElement.classList.add('happy');
   lock.style.display = 'none';
   imgHappy.style.opacity = '1';
+  imgGloomy.style.opacity = '0';
+  
   cornerLinks.style.opacity = '1';
   cornerAnchors.forEach(a => a.style.opacity = '1');
+  
   subtitle.textContent = 'Bridging the Gap Between Molecules and Behavior';
   if (brainAnim) { brainAnim.pause(); brainAnim.style.opacity = '0'; }
   showRelock();
@@ -373,6 +390,10 @@ lock.addEventListener('click', e => {
   brainAnim.currentTime = 0;
   brainAnim.style.opacity = '1';
   brainAnim.playbackRate = 0.77;
+  
+  // Ensure gloomy is visible underneath initially
+  imgGloomy.style.opacity = '1';
+  imgHappy.style.opacity = '0';
 
   const fadeOutLead = 1.75;  
   const transitionLead = 2.25; 
@@ -388,8 +409,10 @@ lock.addEventListener('click', e => {
       faded = true;
       brainAnim.style.transition = 'opacity 1s ease';
       brainAnim.style.opacity = '0';
-      // Crossfade to happy image
+      
+      // Perform Crossfade
       imgHappy.style.opacity = '1';
+      imgGloomy.style.opacity = '0';
     }
     if (!transitioned && t >= dur - transitionLead) {
       transitioned = true;
@@ -403,7 +426,10 @@ lock.addEventListener('click', e => {
   brainAnim.addEventListener('ended', () => {
     brainAnim.style.opacity = '0';
     brainAnim.removeEventListener('timeupdate', monitor);
-    if (!faded) imgHappy.style.opacity = '1';
+    if (!faded) {
+       imgHappy.style.opacity = '1';
+       imgGloomy.style.opacity = '0';
+    }
     if (!transitioned) startHappyTransition();
   }, { once: true });
 });
@@ -417,6 +443,8 @@ relockButton.addEventListener('click', function (e) {
   if (brainAnim) { brainAnim.pause(); brainAnim.style.opacity = '0'; }
 
   imgHappy.style.opacity = '0';
+  imgGloomy.style.opacity = '1';
+  
   subtitle.textContent = 'Unlocking the Mesoscale Level of the Brain';
   
   cornerLinks.style.opacity = '0';
