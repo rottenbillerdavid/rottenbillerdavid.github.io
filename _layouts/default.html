@@ -174,6 +174,7 @@
     background: none; border: none; padding: 8px 12px;
     color: rgb(110, 110, 110);
     cursor: url('/assets/images/grey_key.png') 10 10, pointer;
+    pointer-events: auto; 
   }
   
   #relock-button img { 
@@ -213,7 +214,7 @@
   .corner-links a:hover { transform: scale(1.05); }
   .corner-links a .corner-title { display: block; font-size: 1.4rem; font-weight: bold; margin-bottom: 5px; }
 
-  /* Desktop Corners - Changed from 80px to 180px */
+  /* Desktop Corners */
   .corner-top-left { top: 120px; left: 180px; text-align: left; }
   .corner-top-right { top: 120px; right: 180px; text-align: right; }
   .corner-bottom-left { bottom: 60px; left: 180px; text-align: left; }
@@ -223,19 +224,43 @@
      4. MOBILE PORTRAIT (Vertical)
      ========================================= */
   @media screen and (max-width: 900px) and (orientation: portrait) {
-    nav { height: auto; flex-direction: column; padding: 15px 0; gap: 5px; }
-    nav .brand { font-size: 0; transform: scale(1); padding: 0; }
-    nav .brand::before { content: "HL"; font-size: 3rem; display: block; }
-    .nav-links { width: 100%; margin: 0; padding: 0; justify-content: center; flex-wrap: wrap; gap: 4px; }
-    .nav-links a { font-size: 0.8rem; padding: 6px 8px; }
+    
+    /* Navbar: Compact Stack */
+    nav { 
+      height: auto; 
+      flex-direction: column; 
+      padding: 5px 0; /* Reduced padding */
+      gap: 2px;       /* Tight gap */
+    }
+    
+    /* Revert to normal HillierLab text */
+    nav .brand { 
+      font-size: 1.2rem; 
+      transform: none; 
+      padding: 4px 14px; 
+    }
+    /* Hide the HL hack */
+    nav .brand::before { display: none; }
+    
+    .nav-links { 
+      width: 100%; margin: 0; padding: 0; 
+      justify-content: center; flex-wrap: wrap; gap: 4px; 
+    }
+    .nav-links a { font-size: 0.8rem; padding: 5px 8px; }
 
     .composite-container { width: 100vw; max-width: none; }
+    
     /* Mobile Subtitle */
     .subtitle { top: auto; bottom: -15%; font-size: 1rem; padding: 0 10px; }
 
+    /* Corner Links: Moved Up */
     .corner-links {
-      position: absolute; top: 62%; bottom: auto; left: 0; right: 0;
-      display: flex; flex-direction: column; align-items: center; gap: 10px;
+      position: absolute; 
+      /* Changed from 62% to 50% to move them up */
+      top: 50%; 
+      bottom: auto; left: 0; right: 0;
+      display: flex; flex-direction: column; align-items: center; 
+      gap: 8px; /* Slightly tighter gap to save space */
     }
     .corner-links a {
       position: relative; top: auto !important; bottom: auto !important;
