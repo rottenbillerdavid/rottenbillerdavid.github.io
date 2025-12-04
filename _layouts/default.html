@@ -224,22 +224,18 @@
      4. MOBILE PORTRAIT (Vertical)
      ========================================= */
   @media screen and (max-width: 900px) and (orientation: portrait) {
-    
-    /* Navbar: Compact Stack */
     nav { 
       height: auto; 
       flex-direction: column; 
-      padding: 5px 0; /* Reduced padding */
-      gap: 2px;       /* Tight gap */
+      padding: 5px 0; 
+      gap: 2px;
     }
     
-    /* Revert to normal HillierLab text */
     nav .brand { 
       font-size: 1.2rem; 
       transform: none; 
       padding: 4px 14px; 
     }
-    /* Hide the HL hack */
     nav .brand::before { display: none; }
     
     .nav-links { 
@@ -256,11 +252,11 @@
     /* Corner Links: Moved Up */
     .corner-links {
       position: absolute; 
-      /* Changed from 62% to 50% to move them up */
-      top: 50%; 
+      /* CHANGED: Moved up from 62% to 45% to clear the grey lock at the bottom */
+      top: 45%; 
       bottom: auto; left: 0; right: 0;
       display: flex; flex-direction: column; align-items: center; 
-      gap: 8px; /* Slightly tighter gap to save space */
+      gap: 8px; 
     }
     .corner-links a {
       position: relative; top: auto !important; bottom: auto !important;
