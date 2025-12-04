@@ -207,7 +207,15 @@
   }
   
   .corner-links a:hover { transform: scale(1.05); }
-  .corner-links a .corner-title { display: block; font-size: 1.4rem; font-weight: bold; margin-bottom: 5px; }
+  
+  /* CHANGED: Removed margin-bottom and set line-height to 1 for tight spacing */
+  .corner-links a .corner-title { 
+    display: block; 
+    font-size: 1.4rem; 
+    font-weight: bold; 
+    margin-bottom: 0; 
+    line-height: 1;
+  }
 
   /* Desktop Corners */
   .corner-top-left { top: 120px; left: 180px; text-align: left; }
@@ -276,7 +284,7 @@
     
     /* SUBTITLE OVER BRAIN (Landscape Only) */
     .subtitle {
-      top: -5px; /* Sits right under the 60px Navbar */
+      top: -5px; 
       bottom: auto;
       font-size: 0.9rem;
       padding: 0 10px;
