@@ -92,7 +92,6 @@
     display: flex; 
     justify-content: center; 
     align-items: flex-start; 
-    /* CHANGED: Increased from 8vh to 10vh to move everything down ~20px */
     padding-top: 10vh; 
   }
 
@@ -144,8 +143,8 @@
   /* SUBTITLE */
   .subtitle {
     position: absolute; 
-    /* CHANGED: Moved from bottom:-8% to top:82% to sit right under brain */
-    top: 82%; 
+    /* CHANGED: Moved up slightly from 82% to 79% */
+    top: 79%; 
     left: 0; width: 100%; text-align: center;
     font-size: 1.2rem; color: #e0e0e0; transition: color 1s ease;
     pointer-events: none; 
@@ -162,8 +161,8 @@
   /* RELOCK BUTTON (Grey Lock) */
   #relock-container {
     position: absolute; 
-    /* CHANGED: Moved up from 20px to 80px */
-    bottom: 80px; 
+    /* CHANGED: Lowered from 80px to 25px */
+    bottom: 25px; 
     left: 50%; transform: translateX(-50%);
     display: flex; flex-direction: column; align-items: center;
     opacity: 0; 
@@ -173,15 +172,24 @@
   }
   #relock-button {
     display: flex; flex-direction: column; align-items: center;
-    /* CHANGED: Reduced gap to 0 so text is closer */
     gap: 0; 
     background: none; border: none; padding: 8px 12px;
     color: rgb(110, 110, 110);
     cursor: url('/assets/images/grey_key.png') 10 10, pointer;
-    pointer-events: auto; /* Clickable */
+    pointer-events: auto; 
   }
-  /* CHANGED: Increased size from 180px to 260px */
-  #relock-button img { width: 260px; transform: translateY(20px); }
+  
+  /* CHANGED: Decreased size to 220px (from 260px) */
+  #relock-button img { 
+    width: 220px; 
+    transform: translateY(20px); 
+  }
+  
+  /* CHANGED: Pull text tighter to key */
+  #relock-button span {
+    display: block;
+    margin-top: -5px;
+  }
 
   /* CORNER LINKS */
   .corner-links {
@@ -223,7 +231,7 @@
     .nav-links a { font-size: 0.8rem; padding: 6px 8px; }
 
     .composite-container { width: 100vw; max-width: none; }
-    /* Mobile Subtitle: Adjusted to not overlap */
+    /* Mobile Subtitle */
     .subtitle { top: auto; bottom: -15%; font-size: 1rem; padding: 0 10px; }
 
     .corner-links {
@@ -236,7 +244,6 @@
       max-width: 90%;
     }
     
-    /* Adjust Relock for Mobile if it's too high */
     #relock-container { bottom: 20px; }
     #relock-button img { width: 150px; }
   }
