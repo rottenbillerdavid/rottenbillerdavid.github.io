@@ -199,7 +199,6 @@
     pointer-events: none; 
     transition: opacity 0.8s ease, color 0.6s ease, transform 0.6s ease;
     
-    /* CHANGED: Increased max-width and forced nowrap to keep text on one line */
     max-width: 350px; 
     white-space: nowrap;
     
@@ -214,11 +213,11 @@
   .corner-links a:hover { transform: scale(1.05); }
   .corner-links a .corner-title { display: block; font-size: 1.4rem; font-weight: bold; margin-bottom: 5px; }
 
-  /* Desktop Corners */
-  .corner-top-left { top: 120px; left: 80px; text-align: left; }
-  .corner-top-right { top: 120px; right: 80px; text-align: right; }
-  .corner-bottom-left { bottom: 60px; left: 80px; text-align: left; }
-  .corner-bottom-right { bottom: 60px; right: 80px; text-align: right; }
+  /* Desktop Corners - Changed from 80px to 180px */
+  .corner-top-left { top: 120px; left: 180px; text-align: left; }
+  .corner-top-right { top: 120px; right: 180px; text-align: right; }
+  .corner-bottom-left { bottom: 60px; left: 180px; text-align: left; }
+  .corner-bottom-right { bottom: 60px; right: 180px; text-align: right; }
 
   /* =========================================
      4. MOBILE PORTRAIT (Vertical)
@@ -242,7 +241,6 @@
       position: relative; top: auto !important; bottom: auto !important;
       left: auto !important; right: auto !important; text-align: center !important;
       max-width: 90%;
-      /* Reset nowrap for mobile so it fits on screen */
       white-space: normal; 
     }
     
