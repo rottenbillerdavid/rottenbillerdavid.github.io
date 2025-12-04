@@ -24,8 +24,8 @@
 
 <style>
   /* =========================================
-     1. GLOBAL SETUP
-     ========================================= */
+      1. GLOBAL SETUP
+      ========================================= */
   html, body {
     margin: 0;
     height: 100dvh;
@@ -37,13 +37,13 @@
     transition: background-color 1.5s ease, color 1.5s ease;
     touch-action: none;
   }
-  
+   
   html.prep body { visibility: hidden; }
   html.no-anim, html.no-anim * { transition: none !important; }
 
   /* =========================================
-     2. NAVBAR
-     ========================================= */
+      2. NAVBAR
+      ========================================= */
   nav {
     position: fixed; top: 0; left: 0;
     width: 100%; height: 60px;
@@ -82,8 +82,8 @@
   .nav-links a.active { border-color: currentColor; }
 
   /* =========================================
-     3. THE SCENE
-     ========================================= */
+      3. THE SCENE
+      ========================================= */
   .scene {
     position: relative;
     flex-grow: 1; 
@@ -174,12 +174,12 @@
     color: rgb(110, 110, 110);
     cursor: url('/assets/images/grey_key.png') 10 10, pointer;
   }
-  
+   
   #relock-button img { 
     width: 220px; 
     transform: translateY(20px); 
   }
-  
+   
   #relock-button span {
     display: block;
     margin-top: -5px;
@@ -192,7 +192,7 @@
     transition: opacity 1.5s ease;
     pointer-events: none !important; 
   }
-  
+   
   .corner-links a {
     position: absolute; font-size: 0.9rem; text-decoration: none; color: inherit;
     pointer-events: none; 
@@ -205,9 +205,9 @@
     pointer-events: auto; 
     cursor: pointer;
   }
-  
+   
   .corner-links a:hover { transform: scale(1.05); }
-  
+   
   /* CHANGED: Removed margin-bottom and set line-height to 1 for tight spacing */
   .corner-links a .corner-title { 
     display: block; 
@@ -224,8 +224,8 @@
   .corner-bottom-right { bottom: 60px; right: 180px; text-align: right; }
 
   /* =========================================
-     4. MOBILE PORTRAIT (Vertical)
-     ========================================= */
+      4. MOBILE PORTRAIT (Vertical)
+      ========================================= */
   @media screen and (max-width: 900px) and (orientation: portrait) {
     nav { 
       height: auto; flex-direction: column; 
@@ -267,30 +267,36 @@
   }
 
   /* =========================================
-     5. MOBILE LANDSCAPE (Horizontal)
-     ========================================= */
+      5. MOBILE LANDSCAPE (Horizontal)
+      ========================================= */
   @media screen and (max-height: 500px) {
     nav { padding: 0 10px; }
     nav .brand { transform: scale(1); font-size: 1rem; }
-   .nav-links {
-  flex-grow: 1; /* Automatically fills space */
-  width: auto;  /* Stops forcing 100% width */
-  margin-left: 10px;
-  margin-right: 10px; 
-  
-  justify-content: flex-start;
-  overflow-x: auto; 
-  white-space: nowrap;
-  -webkit-overflow-scrolling: touch; 
-  scrollbar-width: none;
-  }
+    
+    .nav-links {
+      flex-grow: 1; 
+      width: auto; 
+      margin-left: 10px;
+      /* FIX: Removed margin-right to prevent early cut-off */
+      margin-right: 0; 
+      
+      justify-content: flex-start;
+      overflow-x: auto; 
+      white-space: nowrap;
+      -webkit-overflow-scrolling: touch; 
+      scrollbar-width: none;
+      
+      /* FIX: Added padding-right so the last link has breathing room */
+      padding-right: 20px; 
+    }
     .nav-links::-webkit-scrollbar { display: none; }
-  .nav-links a { 
-    font-size: 0.7rem; 
-    padding: 3px 6px; 
-    flex-shrink: 0; 
-    border-width: 1px; 
-  }    
+    
+    .nav-links a { 
+      font-size: 0.7rem; 
+      padding: 3px 6px; 
+      flex-shrink: 0; 
+      border-width: 1px; 
+    }     
     .composite-container { width: 60vw; }
     
     /* SUBTITLE OVER BRAIN (Landscape Only) */
@@ -414,10 +420,10 @@ function applyUnlockedImmediate() {
   lock.style.display = 'none';
   imgHappy.style.opacity = '1';
   imgGloomy.style.opacity = '0';
-  
+   
   cornerLinks.style.opacity = '1';
   cornerAnchors.forEach(a => a.style.opacity = '1');
-  
+   
   subtitle.textContent = 'Bridging the Gap Between Molecules and Behavior';
   if (brainAnim) { brainAnim.pause(); brainAnim.style.opacity = '0'; }
   showRelock();
@@ -441,7 +447,7 @@ lock.addEventListener('click', e => {
   brainAnim.currentTime = 0;
   brainAnim.style.opacity = '1';
   brainAnim.playbackRate = 0.77;
-  
+   
   imgGloomy.style.opacity = '1';
   imgHappy.style.opacity = '0';
 
@@ -459,7 +465,7 @@ lock.addEventListener('click', e => {
       faded = true;
       brainAnim.style.transition = 'opacity 1s ease';
       brainAnim.style.opacity = '0';
-      
+       
       imgHappy.style.opacity = '1';
       imgGloomy.style.opacity = '0';
     }
@@ -471,7 +477,7 @@ lock.addEventListener('click', e => {
 
   brainAnim.addEventListener('timeupdate', monitor);
   brainAnim.play().catch(err => console.error(err));
-  
+   
   brainAnim.addEventListener('ended', () => {
     brainAnim.style.opacity = '0';
     brainAnim.removeEventListener('timeupdate', monitor);
@@ -493,9 +499,9 @@ relockButton.addEventListener('click', function (e) {
 
   imgHappy.style.opacity = '0';
   imgGloomy.style.opacity = '1';
-  
+   
   subtitle.textContent = 'Unlocking the Mesoscale Level of the Brain';
-  
+   
   cornerLinks.style.opacity = '0';
   cornerAnchors.forEach(a => a.style.opacity = '0');
 
